@@ -4,43 +4,23 @@
 #include <glm/glm.hpp>
 
 #include <iostream>
-#include <stdio.h>
 
 #include "common/utils.h"
 
 using std::cout;
+using std::cerr;
+using std::endl;
 
 using simul8::loadShaders;
+using simul8::init;
 
 GLFWwindow *window;
 
 int main() {
-    if (!glfwInit()) {
-        fprintf(stderr, "Failed to initialize GLFW\n");
-        return -1;
-    }
+    window = init();
 
-    glfwWindowHint(GLFW_SAMPLES, 4); // 4x antialiasing
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // We want OpenGL 3.3
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // We don't want the old OpenGL
-
-    // Open a window and create its OpenGL context
-
-    window = glfwCreateWindow(1024, 768, "Tutorial 01", NULL, NULL);
-    if (window == NULL) {
-        fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
-        glfwTerminate();
-        return -1;
-    }
-    glfwMakeContextCurrent(window); // Initialize GLEW
-    glewExperimental = true; // Needed in core profile
-    if (glewInit() != GLEW_OK) {
-        fprintf(stderr, "Failed to initialize GLEW\n");
-        return -1;
-    }
-
-    // Ensure we can capture the escape key being pressed below
+    // Ensure we can capture the escape key being pressed below.
+    // TODO: implement proper input handling with listener
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
     GLuint programID = loadShaders("assets/shaders/vertex.shader", "assets/shaders/fragment.shader");

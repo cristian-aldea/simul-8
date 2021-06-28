@@ -4,10 +4,15 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
+#include <iostream>
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <vector>
+
+using std::cerr;
+using std::endl;
+using std::exit;
 
 namespace simul8 {
     GLuint loadShaders(const char *vertex_file_path, const char *fragment_file_path) {
@@ -96,5 +101,39 @@ namespace simul8 {
         glDeleteShader(FragmentShaderID);
 
         return ProgramID;
+    }
+
+    /**
+     * Initialize glfw, glew and window.
+     */
+    GLFWwindow *init() {
+        GLFWwindow *window;
+        if (!glfwInit()) {
+            cerr << "Failed to initialize GLFW" << endl;
+            exit(1);
+        }
+
+        glfwWindowHint(GLFW_SAMPLES, 4); // 4x antialiasing
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // We want OpenGL 3.3
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // We don't want the old OpenGL
+
+        // Open a window and create its OpenGL context
+
+        window = glfwCreateWindow(1600, 900, "simul8", nullptr, nullptr);
+        if (window == nullptr) {
+            cerr << "Failed to open GLFW window. glfwCreateWindow returned a nullptr." << endl;
+            glfwTerminate();
+            exit(1);
+        }
+        glfwMakeContextCurrent(window); // Initialize GLEW
+
+        glewExperimental = true; // Needed in core profile
+        if (glewInit() != GLEW_OK) {
+
+            cerr << "Failed to initialize GLEW" << endl;
+            exit(1);
+        }
+        return window;
     }
 }
