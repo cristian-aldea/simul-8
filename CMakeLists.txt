@@ -1,16 +1,11 @@
 cmake_minimum_required(VERSION 3.13)
 
+project(simul8)
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_BUILD_TYPE Debug)
-set(PROJECT_NAME simul8)
-
-project(${PROJECT_NAME})
 
 find_package(OpenGL REQUIRED)
 
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
-
-set(ALL_LIBS ${OPENGL_LIBRARY} glfw glm glew)
+set(ALL_LIBS ${OPENGL_LIBRARY} glfw glm glew_s)
 
 set(HEADER_FILES
         src/common/utils.h
@@ -20,12 +15,19 @@ set(SRC_FILES
         src/main.cpp
         src/common/utils.cpp
         )
+add_subdirectory(external/glfw)
+add_subdirectory(external/glm)
+add_subdirectory(external/glew/build/cmake external/glew)
 
-include(BuildGLEW)
-include(BuildGLFW)
-include(BuildGLM)
+
+set(BUILD_UTILS OFF)
+set(BUILD_SHARED_LIBS OFF)
 
 add_executable(${PROJECT_NAME} ${SRC_FILES} ${HEADER_FILES})
+
+target_include_directories(${PROJECT_NAME}
+        PRIVATE external/glew/include
+        )
 
 target_link_libraries(${PROJECT_NAME} ${ALL_LIBS})
 
