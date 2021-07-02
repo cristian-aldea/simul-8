@@ -4,7 +4,7 @@ project(simul8)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/dist CACHE PATH ${CMAKE_SOURCE_DIR}/dist FORCE)
-set(ALL_LIBS ${OPENGL_LIBRARY} glfw glm glew_s)
+set(ALL_LIBS ${OPENGL_LIBRARY} glfw glm glad)
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
 endif ()
@@ -12,25 +12,20 @@ endif ()
 # make sure OpenGL is available
 find_package(OpenGL REQUIRED)
 
+# glad
+add_subdirectory(external/glad)
+
 # glfw
 set(BUILD_SHARED_LIBS OFF)
 set(GLFW_BUILD_EXAMPLES OFF)
 set(GLFW_BUILD_TESTS OFF)
 set(GLFW_BUILD_DOCS OFF)
 set(GLFW_INSTALL OFF)
+set(GLFW_VULKAN_STATIC OFF)
 add_subdirectory(external/glfw EXCLUDE_FROM_ALL)
 
 # glm
-set(BUILD_STATIC_LIBS OFF)
-set(BUILD_SHARED_LIBS OFF)
-set(BUILD_TESTING OFF)
 add_subdirectory(external/glm EXCLUDE_FROM_ALL)
-
-# glew
-set(BUILD_UTILS OFF)
-set(BUILD_SHARED_LIBS OFF)
-set(CMAKE_POLICY_DEFAULT_CMP0077 NEW)
-add_subdirectory(external/glew/build/cmake external/glew EXCLUDE_FROM_ALL)
 
 set(HEADER_FILES
         src/common/utils.h

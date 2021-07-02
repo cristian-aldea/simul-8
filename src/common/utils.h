@@ -1,6 +1,6 @@
 #pragma once
 
-#include <GL/glew.h> // Always include glew first
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 namespace simul8 {

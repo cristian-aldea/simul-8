@@ -1,9 +1,5 @@
 #include "utils.h"
 
-#include <GL/glew.h> // Always include glew first
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -128,12 +124,11 @@ namespace simul8 {
         }
         glfwMakeContextCurrent(window); // Initialize GLEW
 
-        glewExperimental = true; // Needed in core profile
-        if (glewInit() != GLEW_OK) {
-
-            cerr << "Failed to initialize GLEW" << endl;
+        if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
+            cerr << "Failed to initialize OpenGL context" << endl;
             exit(1);
         }
+
         return window;
     }
 }
