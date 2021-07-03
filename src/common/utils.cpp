@@ -6,6 +6,8 @@
 #include <sstream>
 #include <vector>
 
+#include <glm/glm.hpp>
+
 using std::cerr;
 using std::endl;
 using std::exit;
@@ -131,4 +133,29 @@ namespace simul8 {
 
         return window;
     }
+
+    void setUniform(GLuint shaderProgram, mat4 matrix, const char *name) {
+        glUseProgram(shaderProgram);
+        GLint location = glGetUniformLocation(shaderProgram, name);
+        glUniformMatrix4fv(location, 1, GL_FALSE, &matrix[0][0]);
+    }
+
+    void setUniform(GLuint shaderProgram, vec3 vector, const char *name) {
+        glUseProgram(shaderProgram);
+        GLint location = glGetUniformLocation(shaderProgram, name);
+        glUniform3fv(location, 1, &vector[0]);
+    }
+
+    void setUniform(GLuint shaderProgram, vec2 vector, const char *name) {
+        glUseProgram(shaderProgram);
+        GLint location = glGetUniformLocation(shaderProgram, name);
+        glUniform2fv(location, 1, &vector[0]);
+    }
+
+    void setUniform(GLuint shaderProgram, bool boolean, const char *name) {
+        glUseProgram(shaderProgram);
+        GLint location = glGetUniformLocation(shaderProgram, name);
+        glUniform1i(location, boolean);
+    }
+
 }

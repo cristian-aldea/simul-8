@@ -1,72 +1,61 @@
-// Standard GL includes
+#include <iostream>
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
-
-#include <iostream>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "common/utils.h"
+#include "common/constants.h"
+
+#include "models/Cube.h"
 
 using std::cout;
 using std::cerr;
 using std::endl;
 
+using glm::vec3;
+using glm::mat4;
+
 using simul8::loadShaders;
 using simul8::init;
+using simul8::Vertex;
+using simul8::setUniform;
 
 GLFWwindow *window;
 
+vec3 up = vec3(0, 1, 0);
+
 int main() {
     window = init();
+
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
 
     // Ensure we can capture the escape key being pressed below.
     // TODO: implement proper input handling with listener
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
-    GLuint programID = loadShaders("assets/shaders/vertex.shader", "assets/shaders/fragment.shader");
-    glUseProgram(programID);
+    GLuint shader = loadShaders("assets/shaders/vertex.shader", "assets/shaders/fragment.shader");
+    glUseProgram(shader);
 
-    GLuint VertexArrayID;
-    glGenVertexArrays(1, &VertexArrayID);
-    glBindVertexArray(VertexArrayID);
+    Cube::loadCube();
 
-    // An array of 3 vectors which represents 3 vertices
-    static const GLfloat g_vertex_buffer_data[] = {
-            -1.0f, -1.0f, 0.0f,
-            1.0f, -1.0f, 0.0f,
-            0.0f, 1.0f, 0.0f,
-    };
+    // TODO move to camera
+    mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), 16.0f / 9.0f, 0.1f, 100.0f);
+    setUniform(shader, projectionMatrix, UNIFORM_PROJECTION_MATRIX_NAME);
 
-    // This will identify our vertex buffer
-    GLuint vertexbuffer;
-    // Generate 1 buffer, put the resulting identifier in vertexbuffer
-    glGenBuffers(1, &vertexbuffer);
-    // The following commands will talk about our 'vertexbuffer' buffer
-    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-    // Give our vertices to OpenGL.
-    glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+    mat4 viewMatrix = glm::lookAt(vec3(1, 1, 2), vec3(0, 0, 0), up);
+    setUniform(shader, viewMatrix, UNIFORM_VIEW_MATRIX_NAME);
 
-    // 1st attribute buffer : vertices
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-    glVertexAttribPointer(
-            0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-            3,                  // size
-            GL_FLOAT,           // type
-            GL_FALSE,           // normalized?
-            0,                  // stride
-            (void *) 0            // array buffer offset
-    );
+    Cube cube(shader);
 
-    glClearColor(0, 0, 0.4f, 0);
+    glClearColor(0, 0, 0.2f, 0);
 
     do {
-        // Clear the screen. It's not mentioned before Tutorial 02, but it can cause flickering, so it's there nonetheless.
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // Draw the triangle !
-        glDrawArrays(GL_TRIANGLES, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle
-
+        cube.draw(MAT4_I);
 
         // Swap buffers
         glfwSwapBuffers(window);
