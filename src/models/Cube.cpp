@@ -16,9 +16,9 @@ unsigned int Cube::cubeVAO = 0;
 unsigned int Cube::cubeVBO = 0;
 unsigned int Cube::cubeIBO = 0;
 
-Cube::Cube(GLuint shaderProgram) {
-
-}
+Cube::Cube(GLuint shaderProgram) :
+        shaderProgram{shaderProgram},
+        position{vec3(0)} {}
 
 void Cube::draw(mat4 parent) {
     // Draw the cube

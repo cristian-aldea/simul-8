@@ -30,13 +30,19 @@ add_subdirectory(external/glm EXCLUDE_FROM_ALL)
 set(HEADER_FILES
         src/common/utils.h
         src/models/Cube.h
+        src/common/constants.h
+        src/models/Camera.h
+        src/controller/Controller.h
         )
 
 set(SRC_FILES
         src/main.cpp
         src/common/utils.cpp
         src/models/Cube.cpp
-        src/common/constants.cpp src/common/constants.h)
+        src/common/constants.cpp
+        src/models/Camera.cpp
+        src/controller/Controller.cpp
+        )
 
 add_executable(${PROJECT_NAME} ${SRC_FILES} ${HEADER_FILES})
 

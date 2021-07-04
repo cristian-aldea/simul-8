@@ -8,11 +8,46 @@
 
 #include <glm/glm.hpp>
 
+#include "constants.h"
+
 using std::cerr;
 using std::endl;
 using std::exit;
 
 namespace simul8 {
+    /**
+     * Initialize glfw, glad and window.
+     */
+    GLFWwindow *init() {
+        GLFWwindow *window;
+        if (!glfwInit()) {
+            cerr << "Failed to initialize GLFW" << endl;
+            exit(1);
+        }
+
+        glfwWindowHint(GLFW_SAMPLES, 4); // 4x antialiasing
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // We want OpenGL 3.3
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // We don't want the old OpenGL
+
+        // Open a window and create its OpenGL context
+
+        window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "simul8", nullptr, nullptr);
+        if (window == nullptr) {
+            cerr << "Failed to open GLFW window. glfwCreateWindow returned a nullptr." << endl;
+            glfwTerminate();
+            exit(1);
+        }
+        glfwMakeContextCurrent(window); // Initialize GLEW
+
+        if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
+            cerr << "Failed to initialize OpenGL context" << endl;
+            exit(1);
+        }
+
+        return window;
+    }
+
     GLuint loadShaders(const char *vertex_file_path, const char *fragment_file_path) {
 
         // Create the shaders
@@ -99,39 +134,6 @@ namespace simul8 {
         glDeleteShader(FragmentShaderID);
 
         return ProgramID;
-    }
-
-    /**
-     * Initialize glfw, glew and window.
-     */
-    GLFWwindow *init() {
-        GLFWwindow *window;
-        if (!glfwInit()) {
-            cerr << "Failed to initialize GLFW" << endl;
-            exit(1);
-        }
-
-        glfwWindowHint(GLFW_SAMPLES, 4); // 4x antialiasing
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // We want OpenGL 3.3
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // We don't want the old OpenGL
-
-        // Open a window and create its OpenGL context
-
-        window = glfwCreateWindow(1600, 900, "simul8", nullptr, nullptr);
-        if (window == nullptr) {
-            cerr << "Failed to open GLFW window. glfwCreateWindow returned a nullptr." << endl;
-            glfwTerminate();
-            exit(1);
-        }
-        glfwMakeContextCurrent(window); // Initialize GLEW
-
-        if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
-            cerr << "Failed to initialize OpenGL context" << endl;
-            exit(1);
-        }
-
-        return window;
     }
 
     void setUniform(GLuint shaderProgram, mat4 matrix, const char *name) {
