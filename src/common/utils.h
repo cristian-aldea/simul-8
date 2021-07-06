@@ -19,6 +19,10 @@ namespace simul8 {
         Vertex(vec3 position, vec3 color) :
                 position{position},
                 color{color} {}
+
+        void setColor(vec3 _color) {
+            this->color = _color;
+        };
     };
 
     struct Rotation {
@@ -38,5 +42,8 @@ namespace simul8 {
     void setUniform(GLuint shaderProgram, vec3 vector, const char *name);
     void setUniform(GLuint shaderProgram, vec2 vector, const char *name);
     void setUniform(GLuint shaderProgram, bool boolean, const char *name);
+
+    float rng(float min, float max);
+    float rng();
 
 }

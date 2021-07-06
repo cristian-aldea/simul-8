@@ -11,6 +11,7 @@ using glm::vec3;
 
 using simul8::Vertex;
 using simul8::setUniform;
+using simul8::rng;
 
 unsigned int Cube::cubeVAO = 0;
 unsigned int Cube::cubeVBO = 0;
@@ -36,17 +37,21 @@ void Cube::draw(mat4 parent) {
 }
 
 void Cube::loadCube() {
-    const Vertex vertices[] = {
-            Vertex(vec3(-0.5f, 0.5f, 0.5f), vec3(0.6, 0.3, 0.3)),
-            Vertex(vec3(0.5f, 0.5f, 0.5f), vec3(0.3, 0.6, 0.3)),
-            Vertex(vec3(-0.5f, 0.5f, -0.5f), vec3(0.3, 0.3, 0.6)),
-            Vertex(vec3(0.5f, 0.5f, -0.5f), vec3(0.6, 0.6, 0.3)),
+    Vertex vertices[] = {
+            Vertex(vec3(0.5f, 0.5f, -0.5f), vec3(0)),
+            Vertex(vec3(0.5f, 0.5f, 0.5f), vec3(0)),
+            Vertex(vec3(-0.5f, 0.5f, -0.5f), vec3(0)),
+            Vertex(vec3(-0.5f, 0.5f, 0.5f), vec3(0)),
 
-            Vertex(vec3(-0.5f, -0.5f, 0.5f), vec3(0.3, 0.6, 0.6)),
-            Vertex(vec3(0.5f, -0.5f, 0.5f), vec3(0.6, 0.3, 0.6)),
-            Vertex(vec3(-0.5f, -0.5f, -0.5f), vec3(0.6, 0.6, 0.6)),
-            Vertex(vec3(0.5f, -0.5f, -0.5f), vec3(0.3, 0.3, 0.3)),
+            Vertex(vec3(0.5f, -0.5f, -0.5f), vec3(0)),
+            Vertex(vec3(0.5f, -0.5f, 0.5f), vec3(0)),
+            Vertex(vec3(-0.5f, -0.5f, -0.5f), vec3(0)),
+            Vertex(vec3(-0.5f, -0.5f, 0.5f), vec3(0)),
     };
+
+    for (auto &vertex : vertices) {
+        vertex.color = vec3(rng(), rng(), rng());
+    }
 
     unsigned int indices[] = {
             0, 2, 3, // Top

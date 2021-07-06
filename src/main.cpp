@@ -31,7 +31,7 @@ int main() {
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     glEnable(GL_CULL_FACE);
-    glCullFace(GL_FRONT); // TODO I thought I did the winding order correctly. I guess not. Look into why
+//    glCullFace(GL_FRONT);
 
     // Ensure we can capture the escape key being pressed below.
     // TODO: implement proper input handling with listener
@@ -46,17 +46,45 @@ int main() {
     Camera camera(shader, vec3(-2, 0, 0));
 //    Controller controller(window, &camera);
 
+    // TODO move this to Line class
+    unsigned int lineVBO = 0;
+    unsigned int lineVAO = 0;
+    Vertex lineVertexArray[] = {
+            Vertex(vec3(0, 0, 0), vec3(1, 0, 0)),
+            Vertex(vec3(1, 0, 0), vec3(1, 0, 0)),
+            Vertex(vec3(0, 0, 0), vec3(0, 1, 0)),
+            Vertex(vec3(0, 1, 0), vec3(0, 1, 0)),
+            Vertex(vec3(0, 0, 0), vec3(0, 0, 1)),
+            Vertex(vec3(0, 0, 1), vec3(0, 0, 1)),
+    };
+    glGenVertexArrays(1, &lineVAO);
+    glBindVertexArray(lineVAO);
+
+    glGenBuffers(1, &lineVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, lineVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * 8, lineVertexArray, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
+    glEnableVertexAttribArray(0);
+
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *) sizeof(vec3));
+    glEnableVertexAttribArray(1);
+
     glClearColor(0, 0, 0.2f, 0);
 
     double lastFrameTime = glfwGetTime();
     do {
-        float currTime = glfwGetTime();
-        float dt = glfwGetTime() - lastFrameTime;
+        double currTime = glfwGetTime();
+        double dt = glfwGetTime() - lastFrameTime;
         lastFrameTime = currTime;
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         cube.draw(MAT4_I);
 
+        // TODO move to line class
+        glBindVertexArray(lineVAO);
+        glBindBuffer(GL_ARRAY_BUFFER, lineVBO);
+        glDrawArrays(GL_LINES, 0, 6);
         // Swap buffers
         glfwSwapBuffers(window);
         glfwPollEvents();

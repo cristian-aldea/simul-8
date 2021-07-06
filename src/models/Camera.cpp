@@ -20,7 +20,7 @@ using simul8::setUniform;
 
 Camera::Camera(GLuint shader, vec3 position) :
         position{position},
-        look{},
+        look{vec3(1, 0, 0)},
         up{vec3(0, 1, 0)},
         shader{shader},
         fov{75},

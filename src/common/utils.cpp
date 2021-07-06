@@ -160,4 +160,13 @@ namespace simul8 {
         glUniform1i(location, boolean);
     }
 
+    // TODO, use better randomness
+    float rng(float min, float max) {
+        return ((float) std::rand() / (float) RAND_MAX) * max + min;
+    }
+
+    float rng() {
+        return rng(0, 1);
+    }
+
 }
