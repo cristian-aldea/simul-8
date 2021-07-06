@@ -11,7 +11,7 @@
 
 ## Description
 
-simul8 is an OpenGL engine meant to showcase various fundamental computer graphics concepts. Features are in progress, and the end goal is to have a working physics simulator that allows you to play with 3D shapes in a sandbox environment.
+`simul8` is an OpenGL engine meant to showcase various fundamental computer graphics concepts. Features are in progress, and the end goal is to have a working physics simulator that allows you to play with 3D shapes in a sandbox environment.
 
 ## Build process
 
@@ -25,7 +25,7 @@ This project depends on the following libraries:
 
 ### Resolving dependencies
 
-`glad`, `glfw`, and `glm` have been included as git submodules to simplify the fetching process. All you need to do is add the `--recurse-submodules` flag when cloning the repository:
+The `simul8` project relies on `glad`, `glfw`, and `glm` to build and work properly. These libraries have been included as submodules to the project, and the right version of each library can be downloaded automatically when cloning the project for the first time. To do so, all you need to do is add the `--recurse-submodules` flag:
 
 ```bash
 git clone --recurse-submodules https://github.com/cristian-aldea/simul8.git
@@ -36,6 +36,8 @@ or, if you already cloned the repository and didn't resolve the submodules, just
 ```bash
 git submodule update --init --recursive
 ```
+
+With the project dependencies downloaded, you're now all set to build and run the project!
 
 ### Building the project
 
@@ -55,7 +57,7 @@ cmake --build build --target install
 
 ### Running the project
 
-If you ran the Release build, you should see a `dist/` folder pop up with the project files ready to go. Simply run the binary:
+If you run the Release build, you should see a `dist/` folder pop up with the project files ready to go. Simply run the binary:
 
 ```bash
 cd dist
