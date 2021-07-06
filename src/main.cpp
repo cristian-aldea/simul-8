@@ -8,6 +8,7 @@
 #include "common/constants.h"
 
 #include "models/Cube.h"
+#include "models/Cylinder.h"
 #include "models/Camera.h"
 #include "controller/Controller.h"
 
@@ -41,8 +42,10 @@ int main() {
     glUseProgram(shader);
 
     Cube::loadCube();
+    Cylinder::loadModel();
 
     Cube cube(shader);
+    Cylinder cylinder(shader, vec3(0, 2, 0));
     Camera camera(shader, vec3(-2, 0, 0));
 //    Controller controller(window, &camera);
 
@@ -80,7 +83,9 @@ int main() {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         cube.draw(MAT4_I);
+        cylinder.draw(MAT4_I);
 
+        setUniform(shader, MAT4_I, UNIFORM_MODEL_MATRIX_NAME);
         // TODO move to line class
         glBindVertexArray(lineVAO);
         glBindBuffer(GL_ARRAY_BUFFER, lineVBO);

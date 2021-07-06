@@ -15,14 +15,20 @@ namespace simul8 {
     struct Vertex {
         vec3 position;
         vec3 color;
+        vec2 uv;
+        vec3 normal;
 
         Vertex(vec3 position, vec3 color) :
                 position{position},
-                color{color} {}
+                color{color},
+                uv{vec2(0)},
+                normal{vec3(0, 1, 0)} {}
 
-        void setColor(vec3 _color) {
-            this->color = _color;
-        };
+        Vertex(vec3 position, vec3 color, vec2 uv, vec3 normal) :
+                position{position},
+                color{color},
+                uv{uv},
+                normal{normal} {}
     };
 
     struct Rotation {

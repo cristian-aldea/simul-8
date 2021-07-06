@@ -29,7 +29,9 @@ add_subdirectory(external/glm EXCLUDE_FROM_ALL)
 
 set(HEADER_FILES
         src/common/utils.h
+        src/models/Model.h
         src/models/Cube.h
+        src/models/Cylinder.h
         src/common/constants.h
         src/models/Camera.h
         src/controller/Controller.h
@@ -38,7 +40,9 @@ set(HEADER_FILES
 set(SRC_FILES
         src/main.cpp
         src/common/utils.cpp
+        src/models/Model.cpp
         src/models/Cube.cpp
+        src/models/Cylinder.cpp
         src/common/constants.cpp
         src/models/Camera.cpp
         src/controller/Controller.cpp
