@@ -4,7 +4,6 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "../common/utils.h"
 #include "../common/constants.h"
 
 using glm::vec3;
@@ -15,7 +14,6 @@ using simul8::rng;
 
 unsigned int Cube::cubeVAO = 0;
 unsigned int Cube::cubeVBO = 0;
-unsigned int Cube::cubeIBO = 0;
 
 Cube::Cube(GLuint shaderProgram) :
         shaderProgram{shaderProgram},
@@ -27,51 +25,69 @@ void Cube::draw(mat4 parent) {
     glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
 
     mat4 modelMatrix = glm::translate(MAT4_I, position)
-                       * glm::rotate(MAT4_I, glm::radians(0.0f), vec3(1, 0, 0))
-                       * glm::scale(MAT4_I, vec3(1));
+                       * glm::rotate(MAT4_I, glm::radians(rotation.angle), rotation.axis)
+                       * glm::scale(MAT4_I, scale);
 
     setUniform(shaderProgram, parent * modelMatrix, UNIFORM_MODEL_MATRIX_NAME);
 
-    glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, nullptr);
+    glDrawArrays(GL_TRIANGLES, 0, numVertices);
 
 }
 
 void Cube::loadCube() {
     Vertex vertices[] = {
-            Vertex(vec3(0.5f, 0.5f, -0.5f), vec3(0)),
-            Vertex(vec3(0.5f, 0.5f, 0.5f), vec3(0)),
-            Vertex(vec3(-0.5f, 0.5f, -0.5f), vec3(0)),
-            Vertex(vec3(-0.5f, 0.5f, 0.5f), vec3(0)),
+            // Top
+            Vertex(vec3(0.5f, 0.5f, -0.5f), vec3(0), vec2(0), vec3(0, 1, 0)), // 0
+            Vertex(vec3(-0.5f, 0.5f, -0.5f), vec3(0), vec2(0), vec3(0, 1, 0)), // 2
+            Vertex(vec3(-0.5f, 0.5f, 0.5f), vec3(0), vec2(0), vec3(0, 1, 0)), // 3
+            Vertex(vec3(0.5f, 0.5f, -0.5f), vec3(0), vec2(0), vec3(0, 1, 0)), // 0
+            Vertex(vec3(-0.5f, 0.5f, 0.5f), vec3(0), vec2(0), vec3(0, 1, 0)), // 3
+            Vertex(vec3(0.5f, 0.5f, 0.5f), vec3(0), vec2(0), vec3(0, 1, 0)), // 1
 
-            Vertex(vec3(0.5f, -0.5f, -0.5f), vec3(0)),
-            Vertex(vec3(0.5f, -0.5f, 0.5f), vec3(0)),
-            Vertex(vec3(-0.5f, -0.5f, -0.5f), vec3(0)),
-            Vertex(vec3(-0.5f, -0.5f, 0.5f), vec3(0)),
+            // Front
+            Vertex(vec3(-0.5f, 0.5f, -0.5f), vec3(0), vec2(0), vec3(-1, 0, 0)), // 2
+            Vertex(vec3(-0.5f, -0.5f, -0.5f), vec3(0), vec2(0), vec3(-1, 0, 0)), // 6
+            Vertex(vec3(-0.5f, -0.5f, 0.5f), vec3(0), vec2(0), vec3(-1, 0, 0)), // 7
+            Vertex(vec3(-0.5f, 0.5f, -0.5f), vec3(0), vec2(0), vec3(-1, 0, 0)), // 2
+            Vertex(vec3(-0.5f, -0.5f, 0.5f), vec3(0), vec2(0), vec3(-1, 0, 0)), // 7
+            Vertex(vec3(-0.5f, 0.5f, 0.5f), vec3(0), vec2(0), vec3(-1, 0, 0)), // 3
+
+            // Right
+            Vertex(vec3(-0.5f, 0.5f, 0.5f), vec3(0), vec2(0), vec3(0, 0, 1)), // 3
+            Vertex(vec3(-0.5f, -0.5f, 0.5f), vec3(0), vec2(0), vec3(0, 0, 1)), // 7
+            Vertex(vec3(0.5f, -0.5f, 0.5f), vec3(0), vec2(0), vec3(0, 0, 1)), // 5
+            Vertex(vec3(-0.5f, 0.5f, 0.5f), vec3(0), vec2(0), vec3(0, 0, 1)), // 3
+            Vertex(vec3(0.5f, -0.5f, 0.5f), vec3(0), vec2(0), vec3(0, 0, 1)), // 5
+            Vertex(vec3(0.5f, 0.5f, 0.5f), vec3(0), vec2(0), vec3(0, 0, 1)), // 1
+
+            // Left
+            Vertex(vec3(0.5f, 0.5f, -0.5f), vec3(0), vec2(0), vec3(0, 0, -1)), // 0
+            Vertex(vec3(0.5f, -0.5f, -0.5f), vec3(0), vec2(0), vec3(0, 0, -1)), // 4
+            Vertex(vec3(-0.5f, -0.5f, -0.5f), vec3(0), vec2(0), vec3(0, 0, -1)), // 6
+            Vertex(vec3(0.5f, 0.5f, -0.5f), vec3(0), vec2(0), vec3(0, 0, -1)), // 0
+            Vertex(vec3(-0.5f, -0.5f, -0.5f), vec3(0), vec2(0), vec3(0, 0, -1)), // 6
+            Vertex(vec3(-0.5f, 0.5f, -0.5f), vec3(0), vec2(0), vec3(0, 0, -1)), // 2
+
+            // Back
+            Vertex(vec3(0.5f, 0.5f, 0.5f), vec3(0), vec2(0), vec3(1, 0, 0)), // 1
+            Vertex(vec3(0.5f, -0.5f, 0.5f), vec3(0), vec2(0), vec3(1, 0, 0)), // 5
+            Vertex(vec3(0.5f, -0.5f, -0.5f), vec3(0), vec2(0), vec3(1, 0, 0)), // 4
+            Vertex(vec3(0.5f, 0.5f, 0.5f), vec3(0), vec2(0), vec3(1, 0, 0)), // 1
+            Vertex(vec3(0.5f, -0.5f, -0.5f), vec3(0), vec2(0), vec3(1, 0, 0)), // 4
+            Vertex(vec3(0.5f, 0.5f, -0.5f), vec3(0), vec2(0), vec3(1, 0, 0)), // 0
+
+            // Bottom
+            Vertex(vec3(-0.5f, -0.5f, -0.5f), vec3(0), vec2(0), vec3(0, -1, 0)), // 6
+            Vertex(vec3(0.5f, -0.5f, -0.5f), vec3(0), vec2(0), vec3(0, -1, 0)), // 4
+            Vertex(vec3(0.5f, -0.5f, 0.5f), vec3(0), vec2(0), vec3(0, -1, 0)), // 5
+            Vertex(vec3(-0.5f, -0.5f, -0.5f), vec3(0), vec2(0), vec3(0, -1, 0)), // 6
+            Vertex(vec3(0.5f, -0.5f, 0.5f), vec3(0), vec2(0), vec3(0, -1, 0)), // 5
+            Vertex(vec3(-0.5f, -0.5f, 0.5f), vec3(0), vec2(0), vec3(0, -1, 0)), // 7
     };
 
     for (auto &vertex : vertices) {
         vertex.color = vec3(rng(), rng(), rng());
     }
-
-    unsigned int indices[] = {
-            0, 2, 3, // Top
-            0, 3, 1,
-
-            2, 6, 7, // Front
-            2, 7, 3,
-
-            3, 7, 5, // Right
-            3, 5, 1,
-
-            0, 4, 6, // Left
-            0, 6, 2,
-
-            1, 5, 4, // Back
-            1, 4, 0,
-
-            6, 4, 5, // Bottom
-            6, 5, 7,
-    };
 
     glGenVertexArrays(1, &cubeVAO);
     glBindVertexArray(cubeVAO);
@@ -80,15 +96,17 @@ void Cube::loadCube() {
     glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * numVertices, &vertices[0], GL_STATIC_DRAW);
 
-    glGenBuffers(1, &cubeIBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cubeIBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * numIndices, &indices[0], GL_STATIC_DRAW);
-
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
     glEnableVertexAttribArray(0);
 
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *) sizeof(vec3));
     glEnableVertexAttribArray(1);
+
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *) (2 * sizeof(vec3)));
+    glEnableVertexAttribArray(2);
+
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *) (2 * sizeof(vec3) + sizeof(vec2)));
+    glEnableVertexAttribArray(3);
 }
 
 

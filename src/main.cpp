@@ -32,7 +32,9 @@ int main() {
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     glEnable(GL_CULL_FACE);
-//    glCullFace(GL_FRONT);
+
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
 
     // Ensure we can capture the escape key being pressed below.
     // TODO: implement proper input handling with listener
@@ -45,6 +47,7 @@ int main() {
     Cylinder::loadModel();
 
     Cube cube(shader);
+    cube.rotation = Rotation(180, vec3(0, 0, 1));
     Cylinder cylinder(shader, vec3(0, 2, 0));
     Camera camera(shader, vec3(-2, 0, 0));
 //    Controller controller(window, &camera);

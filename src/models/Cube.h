@@ -17,9 +17,7 @@ public:
 private:
     static unsigned int cubeVAO;
     static unsigned int cubeVBO;
-    static unsigned int cubeIBO;
-    static const int numVertices = 8;
-    static const int numIndices = 36;
+    static const int numVertices = 36;
 
     vec3 position;
     GLuint shaderProgram;
