@@ -28,7 +28,7 @@ Camera::Camera(GLuint shader, vec3 position) :
         verticalAngle{0},
         mouseX{0},
         mouseY{0} {
-    updateMatrices();
+    updateUniforms();
 }
 
 void Camera::update(GLFWwindow *window, float dt) {
@@ -80,16 +80,17 @@ void Camera::update(GLFWwindow *window, float dt) {
         position += look * cameraSpeed * dt;
     }
 
-    updateMatrices();
+    updateUniforms();
 
 }
 
-void Camera::updateMatrices() const {
+void Camera::updateUniforms() const {
     mat4 projectionMatrix = glm::perspective(glm::radians(fov), SCREEN_RATIO, 0.1f, 100.0f);
     mat4 viewMatrix = glm::lookAt(position, position + look, up);
 
     setUniform(shader, projectionMatrix, UNIFORM_PROJECTION_MATRIX_NAME);
     setUniform(shader, viewMatrix, UNIFORM_VIEW_MATRIX_NAME);
+    setUniform(shader, position, UNIFORM_CAMERA_POSITION_NAME);
 }
 
 

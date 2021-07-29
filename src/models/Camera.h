@@ -14,7 +14,7 @@ public:
     vec3 look;
     vec3 up;
 private:
-    void updateMatrices() const;
+    void updateUniforms() const;
     double horizontalAngle;
     double verticalAngle;
     float fov;
