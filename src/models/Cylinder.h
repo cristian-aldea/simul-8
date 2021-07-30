@@ -4,23 +4,22 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
-#include "Model.h"
+#include "RenderedModel.h"
 
-class Cylinder : public Model {
+class Cylinder : public RenderedModel {
 public:
-    Cylinder(GLuint shader, vec3 position);
     explicit Cylinder(GLuint shader);
-
-    void draw(mat4 parent) override;
-
-    GLuint shader;
-
     static void loadModel();
 
 private:
-    static int numVertices;
-    static unsigned int cylinderVAO;
-    static unsigned int cylinderVBO;
+    static GLuint vao;
+    static GLuint vbo;
+    static GLsizei numVertices;
+
+    void drawVertices() const override;
+    GLuint getVAO() const override;
+    GLuint getVBO() const override;
+    GLsizei getNumVertices() const override;
 
 };
 

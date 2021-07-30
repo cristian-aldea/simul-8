@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -9,6 +10,7 @@
 #include "../common/utils.h"
 
 using std::string;
+using std::vector;
 
 using glm::vec3;
 using glm::mat4;
@@ -21,10 +23,12 @@ public:
     vec3 position;
     vec3 scale;
     Rotation rotation;
+    vector<Model *> children;
 
     Model();
-    explicit Model(vec3 position);
-    virtual void draw(mat4 parent) = 0;
+
+    virtual void draw(mat4 parent);
+    void addChild(Model *child);
 
     mat4 getMVPMatrix() const;
 };

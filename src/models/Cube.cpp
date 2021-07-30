@@ -12,26 +12,26 @@ using simul8::Vertex;
 using simul8::setUniform;
 using simul8::rng;
 
-unsigned int Cube::cubeVAO = 0;
-unsigned int Cube::cubeVBO = 0;
+unsigned int Cube::vao = 0;
+unsigned int Cube::vbo = 0;
 
-Cube::Cube(GLuint shaderProgram) :
-        shaderProgram{shaderProgram},
-        position{vec3(0)} {}
+Cube::Cube(GLuint shader)
+        : RenderedModel(shader) {}
 
-void Cube::draw(mat4 parent) {
-    // Draw the cube
-    glBindVertexArray(cubeVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
+GLuint Cube::getVAO() const {
+    return vao;
+}
 
-    mat4 modelMatrix = glm::translate(MAT4_I, position)
-                       * glm::rotate(MAT4_I, glm::radians(rotation.angle), rotation.axis)
-                       * glm::scale(MAT4_I, scale);
+GLuint Cube::getVBO() const {
+    return vbo;
+}
 
-    setUniform(shaderProgram, parent * modelMatrix, UNIFORM_MODEL_MATRIX_NAME);
+GLsizei Cube::getNumVertices() const {
+    return cubeNumVertices;
+}
 
-    glDrawArrays(GL_TRIANGLES, 0, numVertices);
-
+void Cube::drawVertices() const {
+    glDrawArrays(GL_TRIANGLES, 0, cubeNumVertices);
 }
 
 void Cube::loadCube() {
@@ -89,12 +89,12 @@ void Cube::loadCube() {
         vertex.color = vec3(rng(), rng(), rng());
     }
 
-    glGenVertexArrays(1, &cubeVAO);
-    glBindVertexArray(cubeVAO);
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
 
-    glGenBuffers(1, &cubeVBO);
-    glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * numVertices, &vertices[0], GL_STATIC_DRAW);
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * cubeNumVertices, &vertices[0], GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
     glEnableVertexAttribArray(0);
@@ -108,7 +108,4 @@ void Cube::loadCube() {
     glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *) (2 * sizeof(vec3) + sizeof(vec2)));
     glEnableVertexAttribArray(3);
 }
-
-
-
 

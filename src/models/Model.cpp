@@ -10,16 +10,20 @@ Model::Model() :
         scale{vec3(1)},
         rotation{Rotation()} {}
 
-Model::Model(vec3 position) :
-        name{"NO_NAME"},
-        position{position},
-        scale{vec3(1)},
-        rotation{Rotation()} {}
-
 mat4 Model::getMVPMatrix() const {
     return glm::translate(MAT4_I, position)
-           * glm::rotate(MAT4_I, glm::radians(0.0f), vec3(1, 0, 0))
+           * glm::rotate(MAT4_I, glm::radians(rotation.angle), rotation.axis)
            * glm::scale(MAT4_I, vec3(1));
+}
+
+void Model::draw(mat4 parent) {
+    for (const auto &child : children) {
+        child->draw(this->getMVPMatrix());
+    }
+}
+
+void Model::addChild(Model *child) {
+    this->children.push_back(child);
 }
 
 

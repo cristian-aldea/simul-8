@@ -3,23 +3,26 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 
-#include "Model.h"
+#include "RenderedModel.h"
 
 using glm::mat4;
 using glm::vec3;
 
-class Cube : public Model {
+class Cube : public RenderedModel {
 public:
-    explicit Cube(GLuint shaderProgram);
+    explicit Cube(GLuint shader);
     static void loadCube();
 
-    void draw(mat4 parent) override;
 private:
-    static unsigned int cubeVAO;
-    static unsigned int cubeVBO;
-    static const int numVertices = 36;
+    static GLuint vao;
+    static GLuint vbo;
+    static const GLsizei cubeNumVertices = 36;
+
+    void drawVertices() const override;
+    GLuint getVAO() const override;
+    GLuint getVBO() const override;
+    GLsizei getNumVertices() const override;
 
     vec3 position;
-    GLuint shaderProgram;
 
 };

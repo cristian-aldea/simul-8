@@ -48,7 +48,8 @@ int main() {
 
     Cube cube(shader);
     cube.rotation = Rotation(180, vec3(0, 0, 1));
-    Cylinder cylinder(shader, vec3(0, 2, 0));
+    Cylinder cylinder(shader);
+    cylinder.position = vec3(0, 2, 0);
     Camera camera(shader, vec3(-2, 0, 0));
 //    Controller controller(window, &camera);
 

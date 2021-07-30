@@ -30,6 +30,7 @@ add_subdirectory(external/glm EXCLUDE_FROM_ALL)
 set(HEADER_FILES
         src/common/utils.h
         src/models/Model.h
+        src/models/RenderedModel.h
         src/models/Cube.h
         src/models/Cylinder.h
         src/common/constants.h
@@ -41,6 +42,7 @@ set(SRC_FILES
         src/main.cpp
         src/common/utils.cpp
         src/models/Model.cpp
+        src/models/RenderedModel.cpp
         src/models/Cube.cpp
         src/models/Cylinder.cpp
         src/common/constants.cpp

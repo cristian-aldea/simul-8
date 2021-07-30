@@ -13,9 +13,16 @@ using glm::vec2;
 using simul8::Vertex;
 using simul8::setUniform;
 
-unsigned int Cylinder::cylinderVAO = 0;
-unsigned int Cylinder::cylinderVBO = 0;
+unsigned int Cylinder::vao = 0;
+unsigned int Cylinder::vbo = 0;
 int Cylinder::numVertices = 0;
+
+Cylinder::Cylinder(GLuint shader)
+        : RenderedModel(shader) {}
+
+void Cylinder::drawVertices() const {
+    glDrawArrays(GL_TRIANGLES, 0, numVertices);
+}
 
 void Cylinder::loadModel() {
     // This method generates cylinder vertices mathematically and populates the VBO with the generated data
@@ -71,11 +78,11 @@ void Cylinder::loadModel() {
 
     numVertices = vertices.size();
 
-    glGenVertexArrays(1, &cylinderVAO);
-    glBindVertexArray(cylinderVAO);
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
 
-    glGenBuffers(1, &cylinderVBO);
-    glBindBuffer(GL_ARRAY_BUFFER, cylinderVBO);
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * numVertices, &vertices[0], GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
@@ -92,20 +99,14 @@ void Cylinder::loadModel() {
 
 }
 
-Cylinder::Cylinder(GLuint shader, vec3 position) :
-        Model(position),
-        shader{shader} {}
+GLuint Cylinder::getVAO() const {
+    return vao;
+}
 
-Cylinder::Cylinder(GLuint shader) :
-        shader{shader} {}
+GLuint Cylinder::getVBO() const {
+    return vbo;
+}
 
-void Cylinder::draw(mat4 parent) {
-    glBindVertexArray(cylinderVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, cylinderVBO);
-
-    mat4 mvp = parent * getMVPMatrix();
-
-    setUniform(shader, mvp, UNIFORM_MODEL_MATRIX_NAME);
-
-    glDrawArrays(GL_TRIANGLES, 0, numVertices);
+GLsizei Cylinder::getNumVertices() const {
+    return numVertices;
 }
