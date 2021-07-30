@@ -33,6 +33,7 @@ set(HEADER_FILES
         src/models/RenderedModel.h
         src/models/Cube.h
         src/models/Cylinder.h
+        src/models/Line.h
         src/common/constants.h
         src/models/Camera.h
         src/controller/Controller.h
@@ -45,6 +46,7 @@ set(SRC_FILES
         src/models/RenderedModel.cpp
         src/models/Cube.cpp
         src/models/Cylinder.cpp
+        src/models/Line.cpp
         src/common/constants.cpp
         src/models/Camera.cpp
         src/controller/Controller.cpp

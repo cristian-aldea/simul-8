@@ -16,5 +16,5 @@ void RenderedModel::draw(mat4 parent) {
 
     setUniform(shader, mvp, UNIFORM_MODEL_MATRIX_NAME);
 
-    glDrawArrays(GL_TRIANGLES, 0, getNumVertices());
+    drawVertices();
 }
