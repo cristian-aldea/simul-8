@@ -36,7 +36,6 @@ set(HEADER_FILES
         src/models/Line.h
         src/common/constants.h
         src/models/Camera.h
-        src/controller/Controller.h
         )
 
 set(SRC_FILES
@@ -49,7 +48,6 @@ set(SRC_FILES
         src/models/Line.cpp
         src/common/constants.cpp
         src/models/Camera.cpp
-        src/controller/Controller.cpp
         )
 
 add_executable(${PROJECT_NAME} ${SRC_FILES} ${HEADER_FILES})

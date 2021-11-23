@@ -60,24 +60,28 @@ void Camera::update(GLFWwindow *window, float dt) {
     vec3 cameraSideVector = glm::normalize(glm::cross(look, up));
 
     // Control camera position with WASD
-    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) != GLFW_PRESS
-        && glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
         position -= cameraSideVector * cameraSpeed * dt;
     }
 
-    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) != GLFW_PRESS
-        && glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
         position += cameraSideVector * cameraSpeed * dt;
     }
 
-    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) != GLFW_PRESS
-        && glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
         position -= look * cameraSpeed * dt;
     }
 
-    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) != GLFW_PRESS
-        && glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
         position += look * cameraSpeed * dt;
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+        position.y += cameraSpeed * dt;
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
+        position.y -= cameraSpeed * dt;
     }
 
     updateUniforms();

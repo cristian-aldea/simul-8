@@ -11,7 +11,6 @@
 #include "models/Cylinder.h"
 #include "models/Line.h"
 #include "models/Camera.h"
-#include "controller/Controller.h"
 
 using std::cout;
 using std::cerr;
@@ -56,8 +55,6 @@ int main() {
     Line line(shader);
 
     Camera camera(shader, vec3(-2, 0, 0));
-//    Controller controller(window, &camera);
-
 
     glClearColor(0.5f, 0.5f, 0.5f, 1);
 
