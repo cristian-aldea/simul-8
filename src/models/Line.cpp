@@ -2,7 +2,7 @@
 
 #include "../common/utils.h"
 
-using simul8::Vertex;
+using s8::Vertex;
 
 unsigned int Line::vao = 0;
 unsigned int Line::vbo = 0;

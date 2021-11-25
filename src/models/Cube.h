@@ -23,6 +23,4 @@ private:
     GLuint getVBO() const override;
     GLsizei getNumVertices() const override;
 
-    vec3 position;
-
 };

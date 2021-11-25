@@ -28,26 +28,29 @@ add_subdirectory(external/glfw EXCLUDE_FROM_ALL)
 add_subdirectory(external/glm EXCLUDE_FROM_ALL)
 
 set(HEADER_FILES
+        src/common/globals.h
         src/common/utils.h
-        src/models/Model.h
-        src/models/RenderedModel.h
+
+        src/models/Camera.h
         src/models/Cube.h
         src/models/Cylinder.h
         src/models/Line.h
-        src/common/constants.h
-        src/models/Camera.h
+        src/models/Model.h
+        src/models/RenderedModel.h
         )
 
 set(SRC_FILES
-        src/main.cpp
+        src/common/globals.cpp
         src/common/utils.cpp
-        src/models/Model.cpp
-        src/models/RenderedModel.cpp
+
+        src/models/Camera.cpp
         src/models/Cube.cpp
         src/models/Cylinder.cpp
         src/models/Line.cpp
-        src/common/constants.cpp
-        src/models/Camera.cpp
+        src/models/Model.cpp
+        src/models/RenderedModel.cpp
+
+        src/main.cpp
         )
 
 add_executable(${PROJECT_NAME} ${SRC_FILES} ${HEADER_FILES})

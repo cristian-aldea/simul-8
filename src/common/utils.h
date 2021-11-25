@@ -8,7 +8,7 @@ using glm::vec3;
 using glm::vec2;
 using glm::mat4;
 
-namespace simul8 {
+namespace s8 {
     GLuint loadShaders(const char *vertex_file_path, const char *fragment_file_path);
     GLFWwindow *init();
 

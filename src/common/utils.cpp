@@ -8,13 +8,13 @@
 
 #include <glm/glm.hpp>
 
-#include "constants.h"
+#include "globals.h"
 
 using std::cerr;
 using std::endl;
 using std::exit;
 
-namespace simul8 {
+namespace s8 {
     /**
      * Initialize glfw, glad and window.
      */
@@ -31,8 +31,7 @@ namespace simul8 {
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // We don't want the old OpenGL
 
         // Open a window and create its OpenGL context
-
-        window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "simul8", nullptr, nullptr);
+        window = glfwCreateWindow(s8::WINDOW_WIDTH, s8::WINDOW_HEIGHT, "s8", nullptr, nullptr);
         if (window == nullptr) {
             cerr << "Failed to open GLFW window. glfwCreateWindow returned a nullptr." << endl;
             glfwTerminate();
@@ -63,7 +62,8 @@ namespace simul8 {
             VertexShaderCode = sstr.str();
             VertexShaderStream.close();
         } else {
-            printf("Impossible to open %s. Make sure the file is present in the same directory as the program!\n", vertex_file_path);
+            printf("Impossible to open %s. Make sure the file is present in the same directory as the program!\n",
+                   vertex_file_path);
             getchar();
             return 0;
         }

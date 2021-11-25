@@ -3,15 +3,14 @@
 #include <vector>
 
 #include "../common/utils.h"
-#include "../common/constants.h"
 
 using std::vector;
 
 using glm::vec4;
 using glm::vec2;
 
-using simul8::Vertex;
-using simul8::setUniform;
+using s8::Vertex;
+using s8::setUniform;
 
 unsigned int Cylinder::vao = 0;
 unsigned int Cylinder::vbo = 0;
@@ -45,7 +44,9 @@ void Cylinder::loadModel() {
     // Triangle vertices for front circle
     for (int i = 0; i < size; ++i) {
         vertices.push_back(Vertex(vec3(0, 0, halfHeight), color, vec2(0, 0), vec3(0, 0, 1)));
-        vertices.push_back(Vertex(vec3(positions[i].x, positions[i].y, halfHeight), color, vec2(positions[i].x, positions[i].y), vec3(0, 0, 1)));
+        vertices.push_back(
+                Vertex(vec3(positions[i].x, positions[i].y, halfHeight), color, vec2(positions[i].x, positions[i].y),
+                       vec3(0, 0, 1)));
         vertices.push_back(Vertex(vec3(positions[(i + 1) % size].x, positions[(i + 1) % size].y, halfHeight), color,
                                   vec2(positions[(i + 1) % size].x, positions[(i + 1) % size].y), vec3(0, 0, 1)));
     }
@@ -54,20 +55,24 @@ void Cylinder::loadModel() {
     for (int i = 0; i < size; ++i) {
         vertices.emplace_back(vec3(positions[(i + 1) % size].x, positions[(i + 1) % size].y, -halfHeight), color,
                               vec2(positions[(i + 1) % size].x, positions[(i + 1) % size].y), vec3(0, 0, -1));
-        vertices.emplace_back(vec3(positions[i].x, positions[i].y, -halfHeight), color, vec2(positions[i].x, positions[i].y), vec3(0, 0, -1));
+        vertices.emplace_back(vec3(positions[i].x, positions[i].y, -halfHeight), color,
+                              vec2(positions[i].x, positions[i].y), vec3(0, 0, -1));
         vertices.emplace_back(vec3(0, 0, -halfHeight), color, vec2(0, 0), vec3(0, 0, -1));
     }
 
     // triangle vertices for the side of the cylinder
     for (int i = 0; i < size; ++i) {
         // Both of these triangle form a rectangle from that connect positions[i] and positions[i+1] of the two circles
-        vertices.emplace_back(vec3(positions[i].x, positions[i].y, halfHeight), color, vec2(halfHeight, positions[i][3] * halfHeight), positions[i]);
-        vertices.emplace_back(vec3(positions[i].x, positions[i].y, -halfHeight), color, vec2(-halfHeight, positions[i][3] * halfHeight),
+        vertices.emplace_back(vec3(positions[i].x, positions[i].y, halfHeight), color,
+                              vec2(halfHeight, positions[i][3] * halfHeight), positions[i]);
+        vertices.emplace_back(vec3(positions[i].x, positions[i].y, -halfHeight), color,
+                              vec2(-halfHeight, positions[i][3] * halfHeight),
                               positions[i]);
         vertices.emplace_back(vec3(positions[(i + 1) % size].x, positions[(i + 1) % size].y, halfHeight), color,
                               vec2(halfHeight, positions[(i + 1) % size][3] * halfHeight), positions[(i + 1) % size]);
 
-        vertices.emplace_back(vec3(positions[i].x, positions[i].y, -halfHeight), color, vec2(-halfHeight, positions[i][3] * halfHeight),
+        vertices.emplace_back(vec3(positions[i].x, positions[i].y, -halfHeight), color,
+                              vec2(-halfHeight, positions[i][3] * halfHeight),
                               positions[i]);
         vertices.emplace_back(vec3(positions[(i + 1) % size].x, positions[(i + 1) % size].y, -halfHeight), color,
                               vec2(-halfHeight, positions[(i + 1) % size][3] * halfHeight), positions[(i + 1) % size]);

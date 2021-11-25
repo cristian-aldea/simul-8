@@ -2,7 +2,9 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "../common/constants.h"
+#include "../common/globals.h"
+
+using s8::MAT4_I;
 
 Model::Model() :
         name{"NO_NAME"},
@@ -13,11 +15,11 @@ Model::Model() :
 mat4 Model::getMVPMatrix() const {
     return glm::translate(MAT4_I, position)
            * glm::rotate(MAT4_I, glm::radians(rotation.angle), rotation.axis)
-           * glm::scale(MAT4_I, vec3(1));
+           * glm::scale(MAT4_I, scale);
 }
 
 void Model::draw(mat4 parent) {
-    for (const auto &child : children) {
+    for (const auto &child: children) {
         child->draw(this->getMVPMatrix());
     }
 }

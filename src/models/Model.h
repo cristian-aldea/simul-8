@@ -15,7 +15,7 @@ using std::vector;
 using glm::vec3;
 using glm::mat4;
 
-using simul8::Rotation;
+using s8::Rotation;
 
 class Model {
 public:

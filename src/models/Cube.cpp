@@ -2,15 +2,11 @@
 
 #include <glad/glad.h>
 
-#include <glm/gtc/matrix_transform.hpp>
-
-#include "../common/constants.h"
-
 using glm::vec3;
 
-using simul8::Vertex;
-using simul8::setUniform;
-using simul8::rng;
+using s8::Vertex;
+using s8::setUniform;
+using s8::rng;
 
 unsigned int Cube::vao = 0;
 unsigned int Cube::vbo = 0;
@@ -85,7 +81,7 @@ void Cube::loadCube() {
             Vertex(vec3(-0.5f, -0.5f, 0.5f), vec3(0), vec2(0), vec3(0, -1, 0)), // 7
     };
 
-    for (auto &vertex : vertices) {
+    for (auto &vertex: vertices) {
         vertex.color = vec3(rng(), rng(), rng());
     }
 

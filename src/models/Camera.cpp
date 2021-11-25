@@ -2,10 +2,9 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "../common/constants.h"
 #include "../common/utils.h"
+#include "../common/globals.h"
 
-#include <iostream>
 #include <algorithm>
 #include <cmath>
 
@@ -16,7 +15,7 @@ using glm::mat4;
 using glm::perspective;
 using glm::radians;
 
-using simul8::setUniform;
+using s8::setUniform;
 
 Camera::Camera(GLuint shader, vec3 position) :
         position{position},
@@ -89,12 +88,12 @@ void Camera::update(GLFWwindow *window, float dt) {
 }
 
 void Camera::updateUniforms() const {
-    mat4 projectionMatrix = glm::perspective(glm::radians(fov), SCREEN_RATIO, 0.1f, 100.0f);
+    mat4 projectionMatrix = glm::perspective(glm::radians(fov), s8::WINDOW_RATIO, 0.1f, 100.0f);
     mat4 viewMatrix = glm::lookAt(position, position + look, up);
 
-    setUniform(shader, projectionMatrix, UNIFORM_PROJECTION_MATRIX_NAME);
-    setUniform(shader, viewMatrix, UNIFORM_VIEW_MATRIX_NAME);
-    setUniform(shader, position, UNIFORM_CAMERA_POSITION_NAME);
+    setUniform(shader, projectionMatrix, s8::UNIFORM_PROJECTION_MATRIX_NAME);
+    setUniform(shader, viewMatrix, s8::UNIFORM_VIEW_MATRIX_NAME);
+    setUniform(shader, position, s8::UNIFORM_CAMERA_POSITION_NAME);
 }
 
 
