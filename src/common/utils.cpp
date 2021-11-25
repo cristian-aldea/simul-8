@@ -1,5 +1,6 @@
 #include "utils.h"
 
+#include <stdexcept>
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -9,6 +10,7 @@
 #include <glm/glm.hpp>
 
 #include "globals.h"
+#include "../external/stb_image.h"
 
 using std::cerr;
 using std::endl;
@@ -47,7 +49,7 @@ namespace s8 {
         return window;
     }
 
-    GLuint loadShaders(const char *vertex_file_path, const char *fragment_file_path) {
+    GLuint loadShaders(const char *vertexFilePath, const char *fragmentFilePath) {
 
         // Create the shaders
         GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
@@ -55,7 +57,7 @@ namespace s8 {
 
         // Read the Vertex Shader code from the file
         std::string VertexShaderCode;
-        std::ifstream VertexShaderStream(vertex_file_path, std::ios::in);
+        std::ifstream VertexShaderStream(vertexFilePath, std::ios::in);
         if (VertexShaderStream.is_open()) {
             std::stringstream sstr;
             sstr << VertexShaderStream.rdbuf();
@@ -63,14 +65,14 @@ namespace s8 {
             VertexShaderStream.close();
         } else {
             printf("Impossible to open %s. Make sure the file is present in the same directory as the program!\n",
-                   vertex_file_path);
+                   vertexFilePath);
             getchar();
             return 0;
         }
 
         // Read the Fragment Shader code from the file
         std::string FragmentShaderCode;
-        std::ifstream FragmentShaderStream(fragment_file_path, std::ios::in);
+        std::ifstream FragmentShaderStream(fragmentFilePath, std::ios::in);
         if (FragmentShaderStream.is_open()) {
             std::stringstream sstr;
             sstr << FragmentShaderStream.rdbuf();
@@ -82,7 +84,7 @@ namespace s8 {
         int InfoLogLength;
 
         // Compile Vertex Shader
-        printf("Compiling shader : %s\n", vertex_file_path);
+        printf("Compiling shader : %s\n", vertexFilePath);
         char const *VertexSourcePointer = VertexShaderCode.c_str();
         glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
         glCompileShader(VertexShaderID);
@@ -97,7 +99,7 @@ namespace s8 {
         }
 
         // Compile Fragment Shader
-        printf("Compiling shader : %s\n", fragment_file_path);
+        printf("Compiling shader : %s\n", fragmentFilePath);
         char const *FragmentSourcePointer = FragmentShaderCode.c_str();
         glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer, NULL);
         glCompileShader(FragmentShaderID);
@@ -136,6 +138,30 @@ namespace s8 {
         return ProgramID;
     }
 
+    GLuint loadTexture(const char *textureFilePath) {
+        GLuint texture;
+
+        glGenTextures(1, &texture);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture);
+
+        int width, height, nChannels;
+        unsigned char *data = stbi_load(textureFilePath, &width, &height, &nChannels, 0);
+
+        if (!data) {
+            throw std::runtime_error("Failed to load texture data");
+        }
+
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+
+        stbi_image_free(data);
+
+        return texture;
+
+    }
+
     void setUniform(GLuint shaderProgram, mat4 matrix, const char *name) {
         glUseProgram(shaderProgram);
         GLint location = glGetUniformLocation(shaderProgram, name);
@@ -168,5 +194,6 @@ namespace s8 {
     float rng() {
         return rng(0, 1);
     }
+
 
 }

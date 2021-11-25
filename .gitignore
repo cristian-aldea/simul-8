@@ -7,3 +7,6 @@ external/glew/
 
 build/
 dist/
+
+*.jpg
+*.jpeg

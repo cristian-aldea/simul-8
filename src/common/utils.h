@@ -9,9 +9,6 @@ using glm::vec2;
 using glm::mat4;
 
 namespace s8 {
-    GLuint loadShaders(const char *vertex_file_path, const char *fragment_file_path);
-    GLFWwindow *init();
-
     struct Vertex {
         vec3 position;
         vec3 color;
@@ -43,6 +40,12 @@ namespace s8 {
                 angle{angle},
                 axis{axis} {}
     };
+
+    GLFWwindow *init();
+
+    GLuint loadShaders(const char *vertexFilePath, const char *fragmentFilePath);
+    GLuint loadTexture(const char *textureFilePath);
+
 
     void setUniform(GLuint shaderProgram, mat4 matrix, const char *name);
     void setUniform(GLuint shaderProgram, vec3 vector, const char *name);

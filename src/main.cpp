@@ -39,6 +39,8 @@ int main() {
     GLuint shader = loadShaders("assets/shaders/vertex.shader", "assets/shaders/fragment.shader");
     glUseProgram(shader);
 
+    GLuint brickTexture = s8::loadTexture("assets/textures/brick.jpg");
+
     Cube::loadCube();
     Cylinder::loadModel();
     Line::loadModel();

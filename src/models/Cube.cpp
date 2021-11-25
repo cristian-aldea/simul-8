@@ -33,52 +33,52 @@ void Cube::drawVertices() const {
 void Cube::loadCube() {
     Vertex vertices[] = {
             // Top
-            Vertex(vec3(0.5f, 0.5f, -0.5f), vec3(0), vec2(0), vec3(0, 1, 0)), // 0
-            Vertex(vec3(-0.5f, 0.5f, -0.5f), vec3(0), vec2(0), vec3(0, 1, 0)), // 2
-            Vertex(vec3(-0.5f, 0.5f, 0.5f), vec3(0), vec2(0), vec3(0, 1, 0)), // 3
-            Vertex(vec3(0.5f, 0.5f, -0.5f), vec3(0), vec2(0), vec3(0, 1, 0)), // 0
-            Vertex(vec3(-0.5f, 0.5f, 0.5f), vec3(0), vec2(0), vec3(0, 1, 0)), // 3
-            Vertex(vec3(0.5f, 0.5f, 0.5f), vec3(0), vec2(0), vec3(0, 1, 0)), // 1
+            Vertex(vec3(0.5f, 0.5f, -0.5f), vec3(0), vec2(1, 0), vec3(0, 1, 0)), // 0
+            Vertex(vec3(-0.5f, 0.5f, -0.5f), vec3(0), vec2(0, 0), vec3(0, 1, 0)), // 2
+            Vertex(vec3(-0.5f, 0.5f, 0.5f), vec3(0), vec2(0, 1), vec3(0, 1, 0)), // 3
+            Vertex(vec3(0.5f, 0.5f, -0.5f), vec3(0), vec2(1, 0), vec3(0, 1, 0)), // 0
+            Vertex(vec3(-0.5f, 0.5f, 0.5f), vec3(0), vec2(0, 1), vec3(0, 1, 0)), // 3
+            Vertex(vec3(0.5f, 0.5f, 0.5f), vec3(0), vec2(1, 1), vec3(0, 1, 0)), // 1
 
             // Front
-            Vertex(vec3(-0.5f, 0.5f, -0.5f), vec3(0), vec2(0), vec3(-1, 0, 0)), // 2
-            Vertex(vec3(-0.5f, -0.5f, -0.5f), vec3(0), vec2(0), vec3(-1, 0, 0)), // 6
-            Vertex(vec3(-0.5f, -0.5f, 0.5f), vec3(0), vec2(0), vec3(-1, 0, 0)), // 7
-            Vertex(vec3(-0.5f, 0.5f, -0.5f), vec3(0), vec2(0), vec3(-1, 0, 0)), // 2
-            Vertex(vec3(-0.5f, -0.5f, 0.5f), vec3(0), vec2(0), vec3(-1, 0, 0)), // 7
-            Vertex(vec3(-0.5f, 0.5f, 0.5f), vec3(0), vec2(0), vec3(-1, 0, 0)), // 3
+            Vertex(vec3(-0.5f, 0.5f, -0.5f), vec3(0), vec2(1, 0), vec3(-1, 0, 0)), // 2
+            Vertex(vec3(-0.5f, -0.5f, -0.5f), vec3(0), vec2(0, 0), vec3(-1, 0, 0)), // 6
+            Vertex(vec3(-0.5f, -0.5f, 0.5f), vec3(0), vec2(0, 1), vec3(-1, 0, 0)), // 7
+            Vertex(vec3(-0.5f, 0.5f, -0.5f), vec3(0), vec2(1, 0), vec3(-1, 0, 0)), // 2
+            Vertex(vec3(-0.5f, -0.5f, 0.5f), vec3(0), vec2(0, 1), vec3(-1, 0, 0)), // 7
+            Vertex(vec3(-0.5f, 0.5f, 0.5f), vec3(0), vec2(1, 1), vec3(-1, 0, 0)), // 3
 
             // Right
-            Vertex(vec3(-0.5f, 0.5f, 0.5f), vec3(0), vec2(0), vec3(0, 0, 1)), // 3
-            Vertex(vec3(-0.5f, -0.5f, 0.5f), vec3(0), vec2(0), vec3(0, 0, 1)), // 7
-            Vertex(vec3(0.5f, -0.5f, 0.5f), vec3(0), vec2(0), vec3(0, 0, 1)), // 5
-            Vertex(vec3(-0.5f, 0.5f, 0.5f), vec3(0), vec2(0), vec3(0, 0, 1)), // 3
-            Vertex(vec3(0.5f, -0.5f, 0.5f), vec3(0), vec2(0), vec3(0, 0, 1)), // 5
-            Vertex(vec3(0.5f, 0.5f, 0.5f), vec3(0), vec2(0), vec3(0, 0, 1)), // 1
+            Vertex(vec3(-0.5f, 0.5f, 0.5f), vec3(0), vec2(0, 1), vec3(0, 0, 1)), // 3
+            Vertex(vec3(-0.5f, -0.5f, 0.5f), vec3(0), vec2(0, 0), vec3(0, 0, 1)), // 7
+            Vertex(vec3(0.5f, -0.5f, 0.5f), vec3(0), vec2(1, 0), vec3(0, 0, 1)), // 5
+            Vertex(vec3(-0.5f, 0.5f, 0.5f), vec3(0), vec2(0, 1), vec3(0, 0, 1)), // 3
+            Vertex(vec3(0.5f, -0.5f, 0.5f), vec3(0), vec2(1, 0), vec3(0, 0, 1)), // 5
+            Vertex(vec3(0.5f, 0.5f, 0.5f), vec3(0), vec2(1, 1), vec3(0, 0, 1)), // 1
 
             // Left
-            Vertex(vec3(0.5f, 0.5f, -0.5f), vec3(0), vec2(0), vec3(0, 0, -1)), // 0
-            Vertex(vec3(0.5f, -0.5f, -0.5f), vec3(0), vec2(0), vec3(0, 0, -1)), // 4
-            Vertex(vec3(-0.5f, -0.5f, -0.5f), vec3(0), vec2(0), vec3(0, 0, -1)), // 6
-            Vertex(vec3(0.5f, 0.5f, -0.5f), vec3(0), vec2(0), vec3(0, 0, -1)), // 0
-            Vertex(vec3(-0.5f, -0.5f, -0.5f), vec3(0), vec2(0), vec3(0, 0, -1)), // 6
-            Vertex(vec3(-0.5f, 0.5f, -0.5f), vec3(0), vec2(0), vec3(0, 0, -1)), // 2
+            Vertex(vec3(0.5f, 0.5f, -0.5f), vec3(0), vec2(1, 1), vec3(0, 0, -1)), // 0
+            Vertex(vec3(0.5f, -0.5f, -0.5f), vec3(0), vec2(1, 0), vec3(0, 0, -1)), // 4
+            Vertex(vec3(-0.5f, -0.5f, -0.5f), vec3(0), vec2(0, 0), vec3(0, 0, -1)), // 6
+            Vertex(vec3(0.5f, 0.5f, -0.5f), vec3(0), vec2(1, 1), vec3(0, 0, -1)), // 0
+            Vertex(vec3(-0.5f, -0.5f, -0.5f), vec3(0), vec2(0, 0), vec3(0, 0, -1)), // 6
+            Vertex(vec3(-0.5f, 0.5f, -0.5f), vec3(0), vec2(0, 1), vec3(0, 0, -1)), // 2
 
             // Back
-            Vertex(vec3(0.5f, 0.5f, 0.5f), vec3(0), vec2(0), vec3(1, 0, 0)), // 1
-            Vertex(vec3(0.5f, -0.5f, 0.5f), vec3(0), vec2(0), vec3(1, 0, 0)), // 5
-            Vertex(vec3(0.5f, -0.5f, -0.5f), vec3(0), vec2(0), vec3(1, 0, 0)), // 4
-            Vertex(vec3(0.5f, 0.5f, 0.5f), vec3(0), vec2(0), vec3(1, 0, 0)), // 1
-            Vertex(vec3(0.5f, -0.5f, -0.5f), vec3(0), vec2(0), vec3(1, 0, 0)), // 4
-            Vertex(vec3(0.5f, 0.5f, -0.5f), vec3(0), vec2(0), vec3(1, 0, 0)), // 0
+            Vertex(vec3(0.5f, 0.5f, 0.5f), vec3(0), vec2(1, 1), vec3(1, 0, 0)), // 1
+            Vertex(vec3(0.5f, -0.5f, 0.5f), vec3(0), vec2(0, 1), vec3(1, 0, 0)), // 5
+            Vertex(vec3(0.5f, -0.5f, -0.5f), vec3(0), vec2(0, 0), vec3(1, 0, 0)), // 4
+            Vertex(vec3(0.5f, 0.5f, 0.5f), vec3(0), vec2(1, 1), vec3(1, 0, 0)), // 1
+            Vertex(vec3(0.5f, -0.5f, -0.5f), vec3(0), vec2(0, 0), vec3(1, 0, 0)), // 4
+            Vertex(vec3(0.5f, 0.5f, -0.5f), vec3(0), vec2(1, 0), vec3(1, 0, 0)), // 0
 
             // Bottom
-            Vertex(vec3(-0.5f, -0.5f, -0.5f), vec3(0), vec2(0), vec3(0, -1, 0)), // 6
-            Vertex(vec3(0.5f, -0.5f, -0.5f), vec3(0), vec2(0), vec3(0, -1, 0)), // 4
-            Vertex(vec3(0.5f, -0.5f, 0.5f), vec3(0), vec2(0), vec3(0, -1, 0)), // 5
-            Vertex(vec3(-0.5f, -0.5f, -0.5f), vec3(0), vec2(0), vec3(0, -1, 0)), // 6
-            Vertex(vec3(0.5f, -0.5f, 0.5f), vec3(0), vec2(0), vec3(0, -1, 0)), // 5
-            Vertex(vec3(-0.5f, -0.5f, 0.5f), vec3(0), vec2(0), vec3(0, -1, 0)), // 7
+            Vertex(vec3(-0.5f, -0.5f, -0.5f), vec3(0), vec2(0, 0), vec3(0, -1, 0)), // 6
+            Vertex(vec3(0.5f, -0.5f, -0.5f), vec3(0), vec2(1, 0), vec3(0, -1, 0)), // 4
+            Vertex(vec3(0.5f, -0.5f, 0.5f), vec3(0), vec2(1, 1), vec3(0, -1, 0)), // 5
+            Vertex(vec3(-0.5f, -0.5f, -0.5f), vec3(0), vec2(0, 0), vec3(0, -1, 0)), // 6
+            Vertex(vec3(0.5f, -0.5f, 0.5f), vec3(0), vec2(1, 1), vec3(0, -1, 0)), // 5
+            Vertex(vec3(-0.5f, -0.5f, 0.5f), vec3(0), vec2(0, 1), vec3(0, -1, 0)), // 7
     };
 
     for (auto &vertex: vertices) {

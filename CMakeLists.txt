@@ -31,6 +31,8 @@ set(HEADER_FILES
         src/common/globals.h
         src/common/utils.h
 
+        src/external/stb_image.h
+
         src/models/Camera.h
         src/models/Cube.h
         src/models/Cylinder.h
@@ -43,6 +45,8 @@ set(SRC_FILES
         src/common/globals.cpp
         src/common/utils.cpp
 
+        src/external/stb_image.cpp
+
         src/models/Camera.cpp
         src/models/Cube.cpp
         src/models/Cylinder.cpp
@@ -51,7 +55,7 @@ set(SRC_FILES
         src/models/RenderedModel.cpp
 
         src/main.cpp
-        )
+        src/external/stb_image.cpp)
 
 add_executable(${PROJECT_NAME} ${SRC_FILES} ${HEADER_FILES})
 
@@ -68,11 +72,19 @@ install(TARGETS ${PROJECT_NAME}
         RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX})
 
 # Copy assets to build directory
-configure_file(${CMAKE_SOURCE_DIR}/assets/shaders/fragment.shader ${CMAKE_BINARY_DIR}/assets/shaders/fragment.shader COPYONLY)
-configure_file(${CMAKE_SOURCE_DIR}/assets/shaders/vertex.shader ${CMAKE_BINARY_DIR}/assets/shaders/vertex.shader COPYONLY)
+set(ASSETS
+        assets/shaders/fragment.shader
+        assets/shaders/vertex.shader
+        assets/textures/brick.jpg
+        )
+
+foreach (ASSET ${ASSETS})
+    configure_file(${CMAKE_SOURCE_DIR}/${ASSET} ${CMAKE_BINARY_DIR}/${ASSET} COPYONLY)
+endforeach ()
 
 # Copy assets to install directory if Release
 if (${CMAKE_BUILD_TYPE} MATCHES Release)
-    configure_file(${CMAKE_SOURCE_DIR}/assets/shaders/fragment.shader ${CMAKE_INSTALL_PREFIX}/assets/shaders/fragment.shader COPYONLY)
-    configure_file(${CMAKE_SOURCE_DIR}/assets/shaders/vertex.shader ${CMAKE_INSTALL_PREFIX}/assets/shaders/vertex.shader COPYONLY)
+    foreach (ASSET ${ASSETS})
+        configure_file(${CMAKE_SOURCE_DIR}/${ASSET} ${CMAKE_INSTALL_PREFIX}/${ASSET} COPYONLY)
+    endforeach ()
 endif ()
