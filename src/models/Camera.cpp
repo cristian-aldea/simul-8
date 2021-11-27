@@ -19,11 +19,11 @@ using s8::setUniform;
 
 Camera::Camera(GLuint shader, vec3 position) :
         position{position},
-        look{vec3(1, 0, 0)},
+        look{vec3(0, 0, 0)},
         up{vec3(0, 1, 0)},
         shader{shader},
         fov{75},
-        horizontalAngle{0}, // 0 angle corresponds to +x
+        horizontalAngle{270}, // 0 angle corresponds to +x
         verticalAngle{0},
         mouseX{0},
         mouseY{0} {
@@ -58,6 +58,10 @@ void Camera::update(GLFWwindow *window, float dt) {
 
     vec3 cameraSideVector = glm::normalize(glm::cross(look, up));
 
+    vec3 lookNoY = look;
+    lookNoY.y = 0;
+    vec3 cameraForward = glm::normalize(lookNoY);
+
     // Control camera position with WASD
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
         position -= cameraSideVector * cameraSpeed * dt;
@@ -68,11 +72,11 @@ void Camera::update(GLFWwindow *window, float dt) {
     }
 
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-        position -= look * cameraSpeed * dt;
+        position -= cameraForward * cameraSpeed * dt;
     }
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-        position += look * cameraSpeed * dt;
+        position += cameraForward * cameraSpeed * dt;
     }
 
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {

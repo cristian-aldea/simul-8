@@ -10,6 +10,7 @@ using glm::mat4;
 namespace s8 {
     extern GLFWwindow *window;
     extern Camera *camera;
+    extern GLuint defaultTexture;
 
     extern const mat4 MAT4_I;
 

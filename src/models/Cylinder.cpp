@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "../common/utils.h"
+#include "../common/globals.h"
 
 using std::vector;
 
@@ -11,13 +12,13 @@ using glm::vec2;
 
 using s8::Vertex;
 using s8::setUniform;
-
-unsigned int Cylinder::vao = 0;
-unsigned int Cylinder::vbo = 0;
-int Cylinder::numVertices = 0;
+using s8::defaultTexture;
 
 Cylinder::Cylinder(GLuint shader)
-        : RenderedModel(shader) {}
+        : RenderedModel(shader, defaultTexture) {
+
+    loadModel();
+}
 
 void Cylinder::drawVertices() const {
     glDrawArrays(GL_TRIANGLES, 0, numVertices);
@@ -102,14 +103,6 @@ void Cylinder::loadModel() {
     glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *) (2 * sizeof(vec3) + sizeof(vec2)));
     glEnableVertexAttribArray(3);
 
-}
-
-GLuint Cylinder::getVAO() const {
-    return vao;
-}
-
-GLuint Cylinder::getVBO() const {
-    return vbo;
 }
 
 GLsizei Cylinder::getNumVertices() const {

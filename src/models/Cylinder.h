@@ -9,16 +9,12 @@
 class Cylinder : public RenderedModel {
 public:
     explicit Cylinder(GLuint shader);
-    static void loadModel();
+    void loadModel();
 
 private:
-    static GLuint vao;
-    static GLuint vbo;
-    static GLsizei numVertices;
+    GLsizei numVertices = 0;
 
     void drawVertices() const override;
-    GLuint getVAO() const override;
-    GLuint getVBO() const override;
     GLsizei getNumVertices() const override;
 
 };

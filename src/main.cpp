@@ -5,12 +5,11 @@
 #include <glm/glm.hpp>
 
 #include "common/utils.h"
-
+#include "common/globals.h"
 #include "models/Cube.h"
 #include "models/Cylinder.h"
 #include "models/Line.h"
 #include "models/Camera.h"
-#include "common/globals.h"
 
 using std::cout;
 using std::cerr;
@@ -24,6 +23,8 @@ using s8::init;
 using s8::Vertex;
 using s8::setUniform;
 using s8::MAT4_I;
+using s8::defaultTexture;
+using s8::Rotation;
 
 int main() {
     GLFWwindow *window = init();
@@ -39,26 +40,25 @@ int main() {
     GLuint shader = loadShaders("assets/shaders/vertex.shader", "assets/shaders/fragment.shader");
     glUseProgram(shader);
 
+    GLuint blueTexture = s8::loadTexture("assets/textures/blue.jpg");
     GLuint brickTexture = s8::loadTexture("assets/textures/brick.jpg");
+    defaultTexture = s8::loadTexture("assets/textures/default.jpg");
+    GLuint floorTexture = s8::loadTexture("assets/textures/floor.jpg");
+    GLuint greenTexture = s8::loadTexture("assets/textures/green.jpg");
+    GLuint redTexture = s8::loadTexture("assets/textures/red.jpg");
 
-    Cube::loadCube();
-    Cylinder::loadModel();
-    Line::loadModel();
+    Cube floor(shader, floorTexture, vec3(50, 1, 50), vec3(1));
+    floor.position = vec3(0, -0.6, 0);
 
-    Cube floor(shader);
-    floor.position = vec3(0, -0.1, 0);
-    floor.scale = vec3(50, 0.01, 50);
-
-    Cube cube(shader);
-    cube.position = vec3(0, 1, 0);
-    cube.rotation = Rotation(180, vec3(0, 0, 1));
+    Cube brick(shader, brickTexture);
+    brick.position = vec3(2, 1, 2);
 
     Cylinder cylinder(shader);
-    cylinder.position = vec3(0, 3, 0);
+    cylinder.scale = vec3(0.1, 0.1, 2);
 
     Line line(shader);
 
-    Camera camera(shader, vec3(-2, 1, 0));
+    Camera camera(shader, vec3(0, 1, 2));
 
     s8::camera = &camera;
 
@@ -72,8 +72,22 @@ int main() {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         floor.draw(MAT4_I);
-        cube.draw(MAT4_I);
+        brick.draw(MAT4_I);
+
+        // render axes
+        cylinder.position = vec3(1, 0, 0);
+        cylinder.rotation = Rotation(90, vec3(0, 1, 0));
+        cylinder.texture = redTexture;
         cylinder.draw(MAT4_I);
+        cylinder.position = vec3(0, 1, 0);
+        cylinder.rotation = Rotation(90, vec3(1, 0, 0));
+        cylinder.texture = greenTexture;
+        cylinder.draw(MAT4_I);
+        cylinder.position = vec3(0, 0, 1);
+        cylinder.rotation = Rotation(0, vec3(0, 1, 0));
+        cylinder.texture = blueTexture;
+        cylinder.draw(MAT4_I);
+
         line.draw(MAT4_I);
 
         // Swap buffers

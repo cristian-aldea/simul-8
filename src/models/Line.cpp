@@ -1,26 +1,19 @@
 #include "Line.h"
 
 #include "../common/utils.h"
+#include "../common/globals.h"
 
 using s8::Vertex;
-
-unsigned int Line::vao = 0;
-unsigned int Line::vbo = 0;
-int Line::numVertices = 6;
+using s8::defaultTexture;
 
 Line::Line(GLuint shader)
-        : RenderedModel(shader) {}
+        : RenderedModel(shader, defaultTexture) {
+
+    loadModel();
+}
 
 void Line::drawVertices() const {
     glDrawArrays(GL_LINES, 0, numVertices);
-}
-
-GLuint Line::getVAO() const {
-    return vao;
-}
-
-GLuint Line::getVBO() const {
-    return vbo;
 }
 
 GLsizei Line::getNumVertices() const {
@@ -28,14 +21,12 @@ GLsizei Line::getNumVertices() const {
 }
 
 void Line::loadModel() {
-    Vertex vertices[] = {
+    vector<Vertex> vertices = {
             Vertex(vec3(0, 0, 0), vec3(1, 0, 0)),
             Vertex(vec3(1, 0, 0), vec3(1, 0, 0)),
-            Vertex(vec3(0, 0, 0), vec3(0, 1, 0)),
-            Vertex(vec3(0, 1, 0), vec3(0, 1, 0)),
-            Vertex(vec3(0, 0, 0), vec3(0, 0, 1)),
-            Vertex(vec3(0, 0, 1), vec3(0, 0, 1)),
     };
+
+    numVertices = vertices.size();
 
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);

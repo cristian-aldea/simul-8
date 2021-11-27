@@ -3,10 +3,11 @@
 using glm::mat4;
 
 namespace s8 {
-    const mat4 MAT4_I = mat4(1);
-
     GLFWwindow *window = nullptr;
     Camera *camera = nullptr;
+    GLuint defaultTexture = 0;
+
+    const mat4 MAT4_I = mat4(1);
 
     const char *const UNIFORM_MODEL_MATRIX_NAME = "modelMatrix";
     const char *const UNIFORM_VIEW_MATRIX_NAME = "viewMatrix";

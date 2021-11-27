@@ -75,7 +75,12 @@ install(TARGETS ${PROJECT_NAME}
 set(ASSETS
         assets/shaders/fragment.shader
         assets/shaders/vertex.shader
+        assets/textures/blue.jpg
         assets/textures/brick.jpg
+        assets/textures/default.jpg
+        assets/textures/floor.jpg
+        assets/textures/green.jpg
+        assets/textures/red.jpg
         )
 
 foreach (ASSET ${ASSETS})

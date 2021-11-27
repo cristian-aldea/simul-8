@@ -146,6 +146,7 @@ namespace s8 {
         glBindTexture(GL_TEXTURE_2D, texture);
 
         int width, height, nChannels;
+        stbi_set_flip_vertically_on_load(true);
         unsigned char *data = stbi_load(textureFilePath, &width, &height, &nChannels, 0);
 
         if (!data) {
