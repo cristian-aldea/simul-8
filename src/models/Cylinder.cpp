@@ -14,17 +14,28 @@ using s8::Vertex;
 using s8::setUniform;
 using s8::defaultTexture;
 
+GLsizei Cylinder::numVertices = 0;
+GLuint Cylinder::vao = 0;
+GLuint Cylinder::vbo = 0;
+bool Cylinder::loaded = false;
+
 Cylinder::Cylinder(GLuint shader)
         : RenderedModel(shader, defaultTexture) {
 
-    loadModel();
+    Cylinder::loadModel();
 }
 
 void Cylinder::drawVertices() const {
     glDrawArrays(GL_TRIANGLES, 0, numVertices);
 }
 
+
 void Cylinder::loadModel() {
+    if (!loaded) {
+        loaded = true;
+    } else {
+        return;
+    }
     // This method generates cylinder vertices mathematically and populates the VBO with the generated data
 
     vector<vec4> positions; // Points on the circle of the front/back of the cylinder
@@ -105,6 +116,10 @@ void Cylinder::loadModel() {
 
 }
 
-GLsizei Cylinder::getNumVertices() const {
-    return numVertices;
+GLuint Cylinder::getVAO() const {
+    return vao;
+}
+
+GLuint Cylinder::getVBO() const {
+    return vbo;
 }

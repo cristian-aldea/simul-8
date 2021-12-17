@@ -13,6 +13,7 @@ namespace s8 {
     const char *const UNIFORM_VIEW_MATRIX_NAME = "viewMatrix";
     const char *const UNIFORM_PROJECTION_MATRIX_NAME = "projectionMatrix";
     const char *const UNIFORM_CAMERA_POSITION_NAME = "cameraPosition";
+    const char *const UNIFORM_LIGHT_POSITION_NAME = "lightPosition";
 
     const int WINDOW_WIDTH = 1600;
     const int WINDOW_HEIGHT = 900;

@@ -6,6 +6,11 @@
 using s8::Vertex;
 using s8::defaultTexture;
 
+GLsizei Line::numVertices = 0;
+GLuint Line::vao = 0;
+GLuint Line::vbo = 0;
+bool Line::loaded = false;
+
 Line::Line(GLuint shader)
         : RenderedModel(shader, defaultTexture) {
 
@@ -16,11 +21,14 @@ void Line::drawVertices() const {
     glDrawArrays(GL_LINES, 0, numVertices);
 }
 
-GLsizei Line::getNumVertices() const {
-    return 6;
-}
 
 void Line::loadModel() {
+    if (!loaded) {
+        loaded = true;
+    } else {
+        return;
+    }
+
     vector<Vertex> vertices = {
             Vertex(vec3(0, 0, 0), vec3(1, 0, 0)),
             Vertex(vec3(1, 0, 0), vec3(1, 0, 0)),
@@ -46,4 +54,12 @@ void Line::loadModel() {
 
     glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *) (2 * sizeof(vec3) + sizeof(vec2)));
     glEnableVertexAttribArray(3);
+}
+
+GLuint Line::getVAO() const {
+    return vao;
+}
+
+GLuint Line::getVBO() const {
+    return vbo;
 }

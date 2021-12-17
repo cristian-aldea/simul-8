@@ -15,8 +15,6 @@ public:
     void draw(mat4 parent) override;
 
     virtual void drawVertices() const = 0;
-    virtual GLsizei getNumVertices() const = 0;
-protected:
-    GLuint vao = 0;
-    GLuint vbo = 0;
+    virtual GLuint getVAO() const = 0;
+    virtual GLuint getVBO() const = 0;
 };

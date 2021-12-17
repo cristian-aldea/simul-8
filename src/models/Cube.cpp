@@ -1,7 +1,6 @@
 #include "Cube.h"
 
 #include <unordered_map>
-
 #include <glad/glad.h>
 
 #include "../common/globals.h"
@@ -15,7 +14,6 @@ using s8::hasKey;
 using s8::defaultTexture;
 
 std::unordered_map<CubeConfig, ModelData> Cube::dataMap;
-
 
 Cube::Cube(GLuint shader) : Cube(shader, defaultTexture, vec3(1), vec3(1)) {}
 
@@ -32,10 +30,6 @@ Cube::Cube(GLuint shader, GLuint texture, vec3 size, vec3 color)
 }
 
 
-GLsizei Cube::getNumVertices() const {
-    return numVertices;
-}
-
 void Cube::drawVertices() const {
     glDrawArrays(GL_TRIANGLES, 0, numVertices);
 }
@@ -44,6 +38,7 @@ void Cube::loadModel(CubeConfig config) {
     if (hasKey(dataMap, config)) {
         vao = dataMap[config].vao;
         vbo = dataMap[config].vbo;
+        return;
     }
 
     float scale = 1;
@@ -130,7 +125,11 @@ void Cube::loadModel(CubeConfig config) {
     dataMap[config] = ModelData(vao, vbo);
 }
 
+GLuint Cube::getVAO() const {
+    return vao;
+}
 
-
-
+GLuint Cube::getVBO() const {
+    return vao;
+}
 

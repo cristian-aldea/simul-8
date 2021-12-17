@@ -7,11 +7,11 @@ in vec2 fragmentUV;
 in vec3 cameraPos;
 
 uniform sampler2D ourTexture;
+uniform vec3 lightPosition = vec3(0, 20, 0);
 
 out vec4 color;
 
 vec4 lightColor = vec4(1, 1, 1, 0);
-vec3 lightPos = vec3(2, 6, 4);
 
 // These values should be between 0 and 1
 float ambientStrength = 0.2;
@@ -25,7 +25,9 @@ vec4 getAmbient(){
 }
 
 vec4 getDiffuse(vec3 normal, vec3 lightDir){
-    float diff = clamp(dot(normal, -lightDir), 0, 1);
+    float dotProduct = dot(normal, -lightDir);
+    float result = dotProduct * sign(dotProduct);
+    float diff = clamp(result, 0, 1);
 
     return diffuseStrength * diff * lightColor;
 }
@@ -41,12 +43,12 @@ vec4 getSpecular(vec3 normal, vec3 lightDir){
 
 void main(){
     vec3 normal = normalize(fragmentNormal);
-    vec3 lightDir = normalize(fragmentPos - lightPos);
+    vec3 lightDir = normalize(fragmentPos - lightPosition);
 
     vec4 ambient = getAmbient();
     vec4 diffuse = getDiffuse(normal, lightDir);
     vec4 specular = getSpecular(normal, lightDir);
-    float distance = distance(fragmentPos, lightPos);
+    float distance = distance(fragmentPos, lightPosition);
 
     vec4 baseColor = texture(ourTexture, fragmentUV);
 

@@ -18,6 +18,7 @@ namespace s8 {
     extern const char *const UNIFORM_VIEW_MATRIX_NAME;
     extern const char *const UNIFORM_PROJECTION_MATRIX_NAME;
     extern const char *const UNIFORM_CAMERA_POSITION_NAME;
+    extern const char *const UNIFORM_LIGHT_POSITION_NAME;
 
     extern const int WINDOW_WIDTH;
     extern const int WINDOW_HEIGHT;

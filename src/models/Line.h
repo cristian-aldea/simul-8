@@ -1,7 +1,6 @@
 #pragma once
 
 #include <glad/glad.h>
-#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
 #include "RenderedModel.h"
@@ -10,12 +9,14 @@ class Line : public RenderedModel {
 public:
     explicit Line(GLuint shader);
 private:
-    GLsizei numVertices = 0;
-
-    void loadModel();
+    static GLsizei numVertices;
+    static GLuint vao;
+    static GLuint vbo;
+    static bool loaded;
 
     void drawVertices() const override;
-    GLsizei getNumVertices() const override;
+    static void loadModel();
 
-
+    GLuint getVAO() const override;
+    GLuint getVBO() const override;
 };

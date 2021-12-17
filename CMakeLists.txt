@@ -36,9 +36,11 @@ set(HEADER_FILES
         src/models/Camera.h
         src/models/Cube.h
         src/models/Cylinder.h
+        src/models/LightSource.h
         src/models/Line.h
         src/models/Model.h
         src/models/RenderedModel.h
+        src/models/Sphere.h
         )
 
 set(SRC_FILES
@@ -51,11 +53,14 @@ set(SRC_FILES
         src/models/Cube.cpp
         src/models/Cylinder.cpp
         src/models/Line.cpp
+        src/models/LightSource.cpp
         src/models/Model.cpp
         src/models/RenderedModel.cpp
+        src/models/Sphere.cpp
 
         src/main.cpp
-        src/external/stb_image.cpp)
+
+        )
 
 add_executable(${PROJECT_NAME} ${SRC_FILES} ${HEADER_FILES})
 
@@ -78,9 +83,10 @@ set(ASSETS
         assets/textures/blue.jpg
         assets/textures/brick.jpg
         assets/textures/default.jpg
-        assets/textures/floor.jpg
+        assets/textures/floor-tile.jpg
         assets/textures/green.jpg
         assets/textures/red.jpg
+        assets/textures/white.jpg
         )
 
 foreach (ASSET ${ASSETS})
