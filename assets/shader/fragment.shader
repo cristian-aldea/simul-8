@@ -26,9 +26,8 @@ vec4 getAmbient(){
     return ambientStrength * lightColor;
 }
 
-vec4 getDiffuse(vec3 normal, vec3 lightDir){
-    float dotProduct = dot(normal, -lightDir);
-    float result = dotProduct * sign(dotProduct);
+vec4 getDiffuse(vec3 normal, float dotLightNormal){
+    float result = dotLightNormal * sign(dotLightNormal);
     float diff = clamp(result, 0, 1);
 
     return diffuseStrength * diff * lightColor;
@@ -42,7 +41,7 @@ vec4 getSpecular(vec3 normal, vec3 lightDir){
     return specularStrength * spec * lightColor;
 }
 
-float shadowCalc()
+float shadowCalc(float dotLightNormal)
 {
     // perform perspective divide
     vec3 pos = fragmentPosLightSpace.xyz / fragmentPosLightSpace.w;
@@ -54,7 +53,8 @@ float shadowCalc()
     // get closest depth value from light's perspective (using [0,1] range fragPosLight as coords)
     float closestDepth = texture(shadowMap, pos.xy).r;
     // check whether current frag pos is in shadow
-    float bias = 0.005;
+    float bias = min(0.05 * dotLightNormal, 0.005);
+
     return pos.z > closestDepth + bias ? 0.0 : 1.0;
 }
 
@@ -62,12 +62,13 @@ void main(){
     vec4 color = texture(ourTexture, fragmentUV);
     vec3 normal = normalize(fragmentNormal);
     vec3 lightDir = normalize(fragmentPos - lightPosition);
+    float dotLightNormal = dot(normal, -lightDir);
 
     vec4 ambient = getAmbient();
-    vec4 diffuse = getDiffuse(normal, lightDir);
+    vec4 diffuse = getDiffuse(normal, dotLightNormal);
     vec4 specular = getSpecular(normal, lightDir);
 
-    float shadow = shadowCalc();
+    float shadow = shadowCalc(dotLightNormal);
 
     fragColor = (ambient + shadow * (diffuse + specular))  * color;
     //    fragColor = (ambient + diffuse + specular)  * color;
