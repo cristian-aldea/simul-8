@@ -4,12 +4,14 @@ in vec3 fragmentPos;
 in vec3 fragmentColor;
 in vec3 fragmentNormal;
 in vec2 fragmentUV;
-in vec3 cameraPos;
+in vec4 fragmentPosLightSpace;
 
 uniform sampler2D ourTexture;
-uniform vec3 lightPosition = vec3(0, 20, 0);
+uniform sampler2D shadowMap;
+uniform vec3 lightPosition;
+uniform vec3 cameraPosition;
 
-out vec4 color;
+out vec4 fragColor;
 
 vec4 lightColor = vec4(1, 1, 1, 0);
 
@@ -34,25 +36,39 @@ vec4 getDiffuse(vec3 normal, vec3 lightDir){
 
 vec4 getSpecular(vec3 normal, vec3 lightDir){
     vec3 reflect = reflect(lightDir, normal);
-    vec3 viewDir = normalize(fragmentPos - cameraPos);
+    vec3 viewDir = normalize(fragmentPos - cameraPosition);
     float spec = pow(clamp(dot(viewDir, -reflect), 0, 1), specPow);
 
     return specularStrength * spec * lightColor;
 }
 
+float shadowCalc()
+{
+    // perform perspective divide
+    vec3 pos = fragmentPosLightSpace.xyz / fragmentPosLightSpace.w;
+    // transform to [0,1] range
+    pos = pos * 0.5 + 0.5;
+    if (pos.z > 1.0){
+        pos.z = 1.0;
+    }
+    // get closest depth value from light's perspective (using [0,1] range fragPosLight as coords)
+    float closestDepth = texture(shadowMap, pos.xy).r;
+    // check whether current frag pos is in shadow
+    float bias = 0.005;
+    return pos.z > closestDepth + bias ? 0.0 : 1.0;
+}
 
 void main(){
+    vec4 color = texture(ourTexture, fragmentUV);
     vec3 normal = normalize(fragmentNormal);
     vec3 lightDir = normalize(fragmentPos - lightPosition);
 
     vec4 ambient = getAmbient();
     vec4 diffuse = getDiffuse(normal, lightDir);
     vec4 specular = getSpecular(normal, lightDir);
-    float distance = distance(fragmentPos, lightPosition);
 
-    vec4 baseColor = texture(ourTexture, fragmentUV);
+    float shadow = shadowCalc();
 
-    vec4 result = (ambient + diffuse + specular)  * baseColor;
-
-    color = result;
+    fragColor = (ambient + shadow * (diffuse + specular))  * color;
+    //    fragColor = (ambient + diffuse + specular)  * color;
 }

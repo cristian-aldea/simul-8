@@ -23,3 +23,7 @@ void LightSource::setPosition(vec3 position) {
 
     setUniform(shader, position, UNIFORM_LIGHT_POSITION_NAME);
 }
+
+vec3 LightSource::getPosition() {
+    return sphere->position;
+}

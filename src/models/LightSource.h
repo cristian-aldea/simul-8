@@ -10,8 +10,12 @@ public:
     void draw(mat4 parent);
 
     void setPosition(vec3 position);
-private:
+    vec3 getPosition();
+
     Sphere *sphere;
+
+private:
+
     GLuint shader;
 };
 

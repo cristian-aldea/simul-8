@@ -10,6 +10,7 @@ RenderedModel::RenderedModel(GLuint shader, GLuint texture)
 void RenderedModel::draw(mat4 parent) {
     glBindVertexArray(getVAO());
     glBindBuffer(GL_ARRAY_BUFFER, getVBO());
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);
 
     mat4 mvp = parent * getMVPMatrix();

@@ -163,28 +163,28 @@ namespace s8 {
 
     }
 
-    void setUniform(GLuint shaderProgram, mat4 matrix, const char *name) {
+    void setUniform(GLuint shaderProgram, mat4 value, const char *name) {
         glUseProgram(shaderProgram);
         GLint location = glGetUniformLocation(shaderProgram, name);
-        glUniformMatrix4fv(location, 1, GL_FALSE, &matrix[0][0]);
+        glUniformMatrix4fv(location, 1, GL_FALSE, &value[0][0]);
     }
 
-    void setUniform(GLuint shaderProgram, vec3 vector, const char *name) {
+    void setUniform(GLuint shaderProgram, vec3 value, const char *name) {
         glUseProgram(shaderProgram);
         GLint location = glGetUniformLocation(shaderProgram, name);
-        glUniform3fv(location, 1, &vector[0]);
+        glUniform3fv(location, 1, &value[0]);
     }
 
-    void setUniform(GLuint shaderProgram, vec2 vector, const char *name) {
+    void setUniform(GLuint shaderProgram, vec2 value, const char *name) {
         glUseProgram(shaderProgram);
         GLint location = glGetUniformLocation(shaderProgram, name);
-        glUniform2fv(location, 1, &vector[0]);
+        glUniform2fv(location, 1, &value[0]);
     }
 
-    void setUniform(GLuint shaderProgram, bool boolean, const char *name) {
+    void setUniform(GLuint shaderProgram, int value, const char *name) {
         glUseProgram(shaderProgram);
         GLint location = glGetUniformLocation(shaderProgram, name);
-        glUniform1i(location, boolean);
+        glUniform1i(location, value);
     }
 
     // TODO, use better randomness

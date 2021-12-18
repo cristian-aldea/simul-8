@@ -101,10 +101,11 @@ namespace s8 {
         return map.find(value) != map.end();
     }
 
-    void setUniform(GLuint shaderProgram, mat4 matrix, const char *name);
-    void setUniform(GLuint shaderProgram, vec3 vector, const char *name);
-    void setUniform(GLuint shaderProgram, vec2 vector, const char *name);
-    void setUniform(GLuint shaderProgram, bool boolean, const char *name);
+    void setUniform(GLuint shaderProgram, mat4 value, const char *name);
+    void setUniform(GLuint shaderProgram, vec3 value, const char *name);
+    void setUniform(GLuint shaderProgram, vec2 value, const char *name);
+    void setUniform(GLuint shaderProgram, bool value, const char *name);
+    void setUniform(GLuint shaderProgram, int value, const char *name);
 
     float rng(float min, float max);
     float rng();
