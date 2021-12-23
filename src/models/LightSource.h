@@ -5,17 +5,13 @@
 
 class LightSource {
 public:
-    explicit LightSource(GLuint shader);
-    LightSource(GLuint shader, GLuint texture);
-    void draw(mat4 parent);
+    explicit LightSource();
+    LightSource(GLuint texture);
+    void draw(mat4 parent, GLuint shader) const;
 
-    void setPosition(vec3 position);
-    vec3 getPosition();
+    void setPosition(vec3 position, GLuint shader) const;
+    vec3 getPosition() const;
 
     Sphere *sphere;
-
-private:
-
-    GLuint shader;
 };
 

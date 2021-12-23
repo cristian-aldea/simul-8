@@ -7,7 +7,7 @@
 
 class Line : public RenderedModel {
 public:
-    explicit Line(GLuint shader);
+    explicit Line();
 private:
     static GLsizei numVertices;
     static GLuint vao;

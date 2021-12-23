@@ -55,25 +55,25 @@ namespace s8 {
 
     struct CubeConfig {
         vec3 scale;
-        vec3 color;
 
-        CubeConfig(vec3 size, vec3 color) : scale{size}, color{color} {}
+        CubeConfig(vec3 size) : scale{size} {}
 
         bool operator==(const CubeConfig &o) const {
-            return scale == o.scale && color == o.color;
+            return scale == o.scale;
         }
     };
 
     struct ModelData {
         GLuint vao;
         GLuint vbo;
+        GLsizei numVertices;
 
-        ModelData() : vao{0}, vbo{0} {}
+        ModelData() : vao{0}, vbo{0}, numVertices{0} {}
 
-        ModelData(GLuint vao, GLuint vbo) : vao{vao}, vbo{vbo} {}
+        ModelData(GLuint vao, GLuint vbo, GLsizei numVertices) : vao{vao}, vbo{vbo}, numVertices{numVertices} {}
 
         bool operator==(const ModelData &o) const {
-            return vao == o.vao && vbo == o.vbo;
+            return vao == o.vao && vbo == o.vbo && numVertices == o.numVertices;
         }
 
         friend void swap(ModelData &first, ModelData &second) {
@@ -81,6 +81,7 @@ namespace s8 {
 
             swap(first.vao, second.vao);
             swap(first.vbo, second.vbo);
+            swap(first.numVertices, second.numVertices);
         }
 
         ModelData &operator=(ModelData other) {
@@ -121,14 +122,14 @@ namespace std {
     struct hash<s8::CubeConfig> {
         size_t operator()(const CubeConfig &k) const {
             using std::hash;
-            return hash<vec3>()(k.scale) ^ (hash<vec3>()(k.color) << 1);
+            return hash<vec3>()(k.scale);
         }
     };
 
     template<>
     struct hash<ModelData> {
         size_t operator()(const ModelData &k) const {
-            return hash<GLuint>()(k.vao) ^ (hash<GLuint>()(k.vao) << 1);
+            return hash<GLuint>()(k.vao) ^ (hash<GLuint>()(k.vao) << 1) ^ (hash<GLuint>()(k.numVertices) >> 1);
         }
     };
 }

@@ -7,7 +7,7 @@
 
 class Cylinder : public RenderedModel {
 public:
-    explicit Cylinder(GLuint shader);
+    explicit Cylinder();
 
 private:
     static GLsizei numVertices;

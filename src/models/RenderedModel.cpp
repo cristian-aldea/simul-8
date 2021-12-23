@@ -4,10 +4,10 @@
 
 using s8::setUniform;
 
-RenderedModel::RenderedModel(GLuint shader, GLuint texture)
-        : shader{shader}, texture{texture}, Model() {}
+RenderedModel::RenderedModel(GLuint texture)
+        : texture{texture}, Model() {}
 
-void RenderedModel::draw(mat4 parent) {
+void RenderedModel::draw(mat4 parent, GLuint shader) {
     glBindVertexArray(getVAO());
     glBindBuffer(GL_ARRAY_BUFFER, getVBO());
     glActiveTexture(GL_TEXTURE0);

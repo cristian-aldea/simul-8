@@ -21,10 +21,10 @@ using s8::ModelData;
 
 class Cube : public RenderedModel {
 public:
-    explicit Cube(GLuint shader);
-    Cube(GLuint shader, GLuint texture);
-    Cube(GLuint shader, vec3 size, vec3 color);
-    Cube(GLuint shader, GLuint texture, vec3 size, vec3 color);
+    explicit Cube();
+    Cube(GLuint texture);
+    Cube(vec3 size);
+    Cube(GLuint texture, vec3 size);
 private:
     static std::unordered_map<CubeConfig, ModelData> dataMap;
 

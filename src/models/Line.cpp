@@ -11,8 +11,8 @@ GLuint Line::vao = 0;
 GLuint Line::vbo = 0;
 bool Line::loaded = false;
 
-Line::Line(GLuint shader)
-        : RenderedModel(shader, defaultTexture) {
+Line::Line()
+        : RenderedModel(defaultTexture) {
 
     loadModel();
 }

@@ -78,12 +78,12 @@ install(TARGETS ${PROJECT_NAME}
 
 # Copy assets to build directory
 set(ASSETS
-        assets/shader/fragment.shader
-        assets/shader/vertex.shader
+        assets/debugShader/fragment.shader
+        assets/debugShader/vertex.shader
         assets/depthMapShader/fragment.shader
         assets/depthMapShader/vertex.shader
-        assets/debugDepthShader/fragment.shader
-        assets/debugDepthShader/vertex.shader
+        assets/mainShader/fragment.shader
+        assets/mainShader/vertex.shader
         assets/textures/blue.jpg
         assets/textures/brick.jpg
         assets/textures/default.jpg

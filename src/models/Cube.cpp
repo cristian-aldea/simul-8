@@ -2,6 +2,7 @@
 
 #include <unordered_map>
 #include <glad/glad.h>
+#include "glm/gtx/string_cast.hpp"
 
 #include "../common/globals.h"
 
@@ -15,16 +16,16 @@ using s8::defaultTexture;
 
 std::unordered_map<CubeConfig, ModelData> Cube::dataMap;
 
-Cube::Cube(GLuint shader) : Cube(shader, defaultTexture, vec3(1), vec3(1)) {}
+Cube::Cube() : Cube(defaultTexture, vec3(1)) {}
 
-Cube::Cube(GLuint shader, GLuint texture) : Cube(shader, texture, vec3(1), vec3(1)) {}
+Cube::Cube(GLuint texture) : Cube(texture, vec3(1)) {}
 
-Cube::Cube(GLuint shader, vec3 size, vec3 color)
-        : Cube(shader, defaultTexture, size, color) {}
+Cube::Cube(vec3 size)
+        : Cube(defaultTexture, size) {}
 
-Cube::Cube(GLuint shader, GLuint texture, vec3 size, vec3 color)
-        : RenderedModel(shader, texture) {
-    CubeConfig config(size, color);
+Cube::Cube(GLuint texture, vec3 size)
+        : RenderedModel(texture) {
+    CubeConfig config(size);
 
     loadModel(config);
 }
@@ -34,14 +35,18 @@ void Cube::drawVertices() const {
     glDrawArrays(GL_TRIANGLES, 0, numVertices);
 }
 
+#include <iostream>
+
 void Cube::loadModel(CubeConfig config) {
     if (hasKey(dataMap, config)) {
+        std::cout << "reuse config: " << glm::to_string(config.scale) << "\n";
         vao = dataMap[config].vao;
         vbo = dataMap[config].vbo;
+        numVertices = dataMap[config].numVertices;
         return;
     }
 
-    float scale = 1;
+    std::cout << "new config: " << glm::to_string(config.scale) << "\n";
     float xScale = config.scale.x;
     float yScale = config.scale.y;
     float zScale = config.scale.z;
@@ -75,7 +80,6 @@ void Cube::loadModel(CubeConfig config) {
 
     // Calculating other half of cube
     for (auto &vertex: vertices) {
-        vertex.color = config.color;
         vertex.position *= 0.5;
         Vertex copy = vertex;
 
@@ -100,7 +104,6 @@ void Cube::loadModel(CubeConfig config) {
         vertex.position.x *= config.scale.x;
         vertex.position.y *= config.scale.y;
         vertex.position.z *= config.scale.z;
-        vertex.color = config.color;
     }
 
     glGenVertexArrays(1, &vao);
@@ -122,7 +125,7 @@ void Cube::loadModel(CubeConfig config) {
     glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *) (2 * sizeof(vec3) + sizeof(vec2)));
     glEnableVertexAttribArray(3);
 
-    dataMap[config] = ModelData(vao, vbo);
+    dataMap[config] = ModelData(vao, vbo, numVertices);
 }
 
 GLuint Cube::getVAO() const {

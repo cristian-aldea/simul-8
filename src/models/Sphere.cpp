@@ -12,9 +12,9 @@ GLuint Sphere::vbo = 0;
 GLuint Sphere::ibo = 0;
 bool Sphere::loaded = false;
 
-Sphere::Sphere(GLuint shader) : Sphere(shader, defaultTexture) {}
+Sphere::Sphere() : Sphere(defaultTexture) {}
 
-Sphere::Sphere(GLuint shader, GLuint texture) : RenderedModel(shader, texture) {
+Sphere::Sphere(GLuint texture) : RenderedModel(texture) {
     loadModel();
 }
 

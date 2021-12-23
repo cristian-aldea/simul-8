@@ -14,8 +14,8 @@ using glm::mat4;
 
 class Sphere : public RenderedModel {
 public:
-    explicit Sphere(GLuint shader);
-    explicit Sphere(GLuint shader, GLuint texture);
+    explicit Sphere();
+    explicit Sphere(GLuint texture);
 
 
 private:

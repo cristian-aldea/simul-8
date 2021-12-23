@@ -24,4 +24,6 @@ namespace s8 {
     extern const int WINDOW_WIDTH;
     extern const int WINDOW_HEIGHT;
     extern const float WINDOW_RATIO;
+    extern const int SHADOW_WIDTH;
+    extern const int SHADOW_HEIGHT;
 };

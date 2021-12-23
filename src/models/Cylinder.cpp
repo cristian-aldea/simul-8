@@ -19,8 +19,8 @@ GLuint Cylinder::vao = 0;
 GLuint Cylinder::vbo = 0;
 bool Cylinder::loaded = false;
 
-Cylinder::Cylinder(GLuint shader)
-        : RenderedModel(shader, defaultTexture) {
+Cylinder::Cylinder()
+        : RenderedModel(defaultTexture) {
 
     Cylinder::loadModel();
 }

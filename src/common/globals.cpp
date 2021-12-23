@@ -20,4 +20,6 @@ namespace s8 {
     const int WINDOW_WIDTH = 1024;
     const int WINDOW_HEIGHT = 1024;
     const float WINDOW_RATIO = (float) WINDOW_WIDTH / WINDOW_HEIGHT;
+    const int SHADOW_WIDTH = 2048;
+    const int SHADOW_HEIGHT = 2048;
 }

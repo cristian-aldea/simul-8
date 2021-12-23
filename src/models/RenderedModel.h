@@ -8,11 +8,10 @@
 
 class RenderedModel : public Model {
 public:
-    GLuint shader;
     GLuint texture;
-    explicit RenderedModel(GLuint shader, GLuint texture);
+    explicit RenderedModel(GLuint texture);
 
-    void draw(mat4 parent) override;
+    void draw(mat4 parent, GLuint shader) override;
 
     virtual void drawVertices() const = 0;
     virtual GLuint getVAO() const = 0;

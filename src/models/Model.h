@@ -27,7 +27,7 @@ public:
 
     Model();
 
-    virtual void draw(mat4 parent);
+    virtual void draw(mat4 parent, GLuint shader);
     void addChild(Model *child);
 
     mat4 getMVPMatrix() const;

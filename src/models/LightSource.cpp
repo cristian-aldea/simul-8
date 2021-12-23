@@ -7,23 +7,22 @@ using s8::setUniform;
 using s8::UNIFORM_LIGHT_POSITION_NAME;
 
 
-LightSource::LightSource(GLuint shader) : LightSource(shader, defaultTexture) {}
+LightSource::LightSource() : LightSource(defaultTexture) {}
 
-LightSource::LightSource(GLuint shader, GLuint texture) {
-    sphere = new Sphere(shader, texture);
-    this->shader = shader;
+LightSource::LightSource(GLuint texture) {
+    sphere = new Sphere(texture);
 }
 
-void LightSource::draw(mat4 parent) {
-    sphere->draw(parent);
+void LightSource::draw(mat4 parent, GLuint shader) const {
+    sphere->draw(parent, shader);
 }
 
-void LightSource::setPosition(vec3 position) {
+void LightSource::setPosition(vec3 position, GLuint shader) const {
     sphere->position = position;
 
     setUniform(shader, position, UNIFORM_LIGHT_POSITION_NAME);
 }
 
-vec3 LightSource::getPosition() {
+vec3 LightSource::getPosition() const {
     return sphere->position;
 }
