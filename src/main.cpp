@@ -90,16 +90,16 @@ int main() {
     stageFloor->position = vec3(0, -0.5, 0);
 
     brick = new Cube(brickTexture);
-    brick->position = vec3(2, 1, 2);
+    brick->position = vec3(-1, 0.5, 1);
 
     brick2 = new Cube(brickTexture);
-    brick2->position = vec3(-1, 0.5, -1);
+    brick2->position = vec3(-1, 0.5, 3);
 
     cylinder = new Cylinder();
     cylinder->scale = vec3(0.1, 0.1, 2);
 
     lightSource = new LightSource(whiteTexture);
-    lightSource->setPosition(vec3(-2, 3, 1), mainShader);
+    lightSource->setPosition(vec3(4, 3, -1), mainShader);
 
     camera = new Camera(mainShader, vec3(0, 1, 2));
 
@@ -179,8 +179,10 @@ void setupShadowMapping() {
                  SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+    float borderColor[] = {1.0f, 1.0f, 1.0f, 1.0f};
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
     // attach depth texture as FBO's depth buffer
     glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
@@ -209,7 +211,9 @@ void renderDepthMap() {
     glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
     glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
     glClear(GL_DEPTH_BUFFER_BIT);
+    glCullFace(GL_FRONT);
     render(depthShader);
+    glCullFace(GL_BACK);
 }
 
 

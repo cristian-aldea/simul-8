@@ -27,7 +27,7 @@ vec4 getAmbient(){
 }
 
 vec4 getDiffuse(vec3 normal, float dotLightNormal){
-    float result = dotLightNormal * sign(dotLightNormal);
+    float result = dotLightNormal;
     float diff = clamp(result, 0, 1);
 
     return diffuseStrength * diff * lightColor;
@@ -43,19 +43,25 @@ vec4 getSpecular(vec3 normal, vec3 lightDir){
 
 float shadowCalc(float dotLightNormal)
 {
-    // perform perspective divide
     vec3 pos = fragmentPosLightSpace.xyz / fragmentPosLightSpace.w;
-    // transform to [0,1] range
     pos = pos * 0.5 + 0.5;
-    if (pos.z > 1.0){
+    if (pos.z > 1.0) {
         pos.z = 1.0;
     }
-    // get closest depth value from light's perspective (using [0,1] range fragPosLight as coords)
-    float closestDepth = texture(shadowMap, pos.xy).r;
-    // check whether current frag pos is in shadow
-    float bias = min(0.05 * dotLightNormal, 0.005);
+    float currentDepth = pos.z;
+    float bias = 0.0005 + (1-dotLightNormal) * 0.001;
+    bias = 0;
 
-    return pos.z > closestDepth + bias ? 0.0 : 1.0;
+    float shadow = 0;
+    vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
+    for (int x = -1; x <= 1; ++x) {
+        for (int y = -1; y <= 1; ++y) {
+            float pcfDepth = texture(shadowMap, pos.xy + vec2(x, y) * texelSize).r;
+            shadow += currentDepth - bias > pcfDepth ? 0.0 : 1.0;
+        }
+    }
+
+    return shadow / 9;
 }
 
 void main(){

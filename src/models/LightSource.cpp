@@ -11,6 +11,7 @@ LightSource::LightSource() : LightSource(defaultTexture) {}
 
 LightSource::LightSource(GLuint texture) {
     sphere = new Sphere(texture);
+    sphere->scale = vec3(0.5);
 }
 
 void LightSource::draw(mat4 parent, GLuint shader) const {
