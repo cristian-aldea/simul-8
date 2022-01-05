@@ -1,6 +1,6 @@
-# s8
+# simul8
 
-- [s8](#s8)
+- [simul8](#simul8)
   - [Description](#description)
   - [Build process](#build-process)
     - [Dependency list](#dependency-list)
