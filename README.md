@@ -11,7 +11,7 @@
 
 ## Description
 
-`s8` is an OpenGL engine meant to showcase various fundamental computer graphics concepts. Features are in progress, and the end goal is to have a working physics simulator that allows you to play with 3D shapes in a sandbox environment.
+`simul8` is an OpenGL engine meant to showcase various fundamental computer graphics concepts. Features are in progress, and the end goal is to have a working physics simulator that allows you to play with 3D shapes in a sandbox environment.
 
 ## Build process
 
